@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GolfHandicapApp.Android", "GolfHandicapApp.Android\GolfHandicapApp.Android.csproj", "{2E854566-74CC-4E2C-8FFB-328A80438B24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GolfHandicapApp", "GolfHandicapApp\GolfHandicapApp.csproj", "{948F8EC2-312B-44A5-A603-7BEB2681DBCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E854566-74CC-4E2C-8FFB-328A80438B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E854566-74CC-4E2C-8FFB-328A80438B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E854566-74CC-4E2C-8FFB-328A80438B24}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2E854566-74CC-4E2C-8FFB-328A80438B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E854566-74CC-4E2C-8FFB-328A80438B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E854566-74CC-4E2C-8FFB-328A80438B24}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{948F8EC2-312B-44A5-A603-7BEB2681DBCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948F8EC2-312B-44A5-A603-7BEB2681DBCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948F8EC2-312B-44A5-A603-7BEB2681DBCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948F8EC2-312B-44A5-A603-7BEB2681DBCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {97769D2A-E2EF-4C5A-9B8F-5775A1B04001}
+	EndGlobalSection
+EndGlobal
