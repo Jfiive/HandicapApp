@@ -16,6 +16,7 @@ namespace GolfHandicapApp
         public MainPage()
         {
             InitializeComponent();
+            
         }
     }
 }
