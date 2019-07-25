@@ -13,6 +13,7 @@ namespace GolfHandicapApp
     //lists can be joined so there might not be a need to make an entire sql database in order to do this since there shouldnt be that much information thats going to be stored in the app
     public class Course
     {
+        //in the future might want to add the front and the back individual ratings/slope and not just the 18 hole slopes and ratings
         [PrimaryKey, AutoIncrement]
         public int CourseID { get; set; }
         public string Name { get; set; }
@@ -40,12 +41,15 @@ namespace GolfHandicapApp
     }
     public class DetailedScore
     {
-        [PrimaryKey, AutoIncrement]
-        public int DetailedScoreID { get; set; }
+        //this is not a table and is only used to store the joined query results into an object so no primary key/ auto increment needed
+        public int ScoreID { get; set; }
         public DateTime Date { get; set; }
         public int Score { get; set; }
+        public decimal Differential { get; set; }
         public int RoundType { get; set; }
+        public string Name { get; set; }
         public decimal Rating { get; set; }
         public decimal Slope { get; set; }
+        public string Tee { get; set; }
     }
 }

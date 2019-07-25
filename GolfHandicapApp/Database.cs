@@ -1,49 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+using Xamarin.Forms;
 using SQLite;
 
 namespace GolfHandicapApp
 {
     public class Database
     {
-        readonly SQLiteAsyncConnection _database;
+        readonly SQLiteConnection _database;
 
         public Database(string dbPath)
         {
-            _database = new SQLiteAsyncConnection(dbPath);
-            _database.CreateTableAsync<Course>().Wait();
-            _database.CreateTableAsync<Scores>().Wait();
-            _database.CreateTableAsync<Handicap>().Wait();
+            _database = new SQLiteConnection(dbPath);
+            _database.CreateTable<Course>();
+            _database.CreateTable<Scores>();
+            _database.CreateTable<Handicap>();
         }
         //general database actions
-        public Task<List<Course>> GetCourses()
+        public List<Course> GetCourses()
         {
-            return _database.Table<Course>().ToListAsync();
+            return _database.Table<Course>().ToList();
         }
-        public Task<int> SaveCourse(Course course)
+        public int SaveCourse(Course course)
         {
-            return _database.InsertAsync(course);
+            return _database.Insert(course);
         }
-        public Task<List<Handicap>> GetHandicaps()
+        public Course GetCourse(int ID)
         {
-            return _database.Table<Handicap>().ToListAsync();
+            //might not have to actually have this one in here since when posting the score this information might already be there based on what they select
+            return _database.Table<Course>().FirstOrDefault(c => c.CourseID == ID);
         }
-        public Task<int> SaveHandicap(Handicap handicap)
+        public List<Handicap> GetHandicaps()
         {
-            return _database.InsertAsync(handicap);
+            return _database.Table<Handicap>().ToList();
         }
-        public Task<List<DetailedScore>> GetPastScores()
+        public int SaveHandicap(Handicap handicap)
         {
-            //this isnt just returning the scores like the other ones are this has to join the course and the score table to make the detailed scores the user is going to see on the front page
-            //will figure this one out later when all the other database actions are set up and running
-            //might have to ditch the whole async thing if this is going to work in here
-            return null;
+            return _database.Insert(handicap);
         }
-        public Task<int> PostScore(Scores score)
+        public List<DetailedScore> GetPastScores()
         {
-            return _database.InsertAsync(score);
+            return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Course.Name, Course.Rating, Course.Slope, Course.Tee FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID"); ;
+        }
+        public int SaveScore(Scores score)
+        {
+            return _database.Insert(score);
+        }
+        public int UpdateCourse (Course course)
+        {
+            return _database.Update(course);
+        }
+        public decimal GetCurrentHandicap()
+        {
+            return _database.Table<Handicap>().OrderByDescending(o => o.Date).FirstOrDefault().Number;
+        }
+        public int GetNumberOfScores()
+        {
+            return _database.Table<Scores>().Count();
+        }
+        public List<Scores> GetLowestScores(int Number)
+        {
+            return _database.Table<Scores>().OrderBy(o => o.Score).Take(Number).ToList();
+        }
+        public List<decimal> GetLowestScoresDifferentials(int Number)
+        {
+            return _database.Query<decimal>("SELECT TOP " + Number + " Differential FROM Scores ORDER BY Score");
         }
     }
 }

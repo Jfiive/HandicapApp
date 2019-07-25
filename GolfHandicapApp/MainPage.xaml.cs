@@ -16,7 +16,22 @@ namespace GolfHandicapApp
         public MainPage()
         {
             InitializeComponent();
-            
+            //this should load the users current scores and put them in the blank space below the buttons
+        }
+
+        private async void PostScoreButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new CourseSelection());
+        }
+
+        private async void HandicapHistoryButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new HandicapHistory());
+        }
+
+        private async void SettingsButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new Settings());
         }
     }
 }

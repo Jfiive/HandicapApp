@@ -4,15 +4,27 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="GolfHandicapApp.MainPage">
+             x:Class="GolfHandicapApp.MainPage"
+             Title="Your Scores">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <On Platform="iOS">0, 20, 0, 0</On>
         </OnPlatform>
     </ContentPage.Padding>
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Button HorizontalOptions="Center" Text="Handicap History"></Button>
-    </StackLayout>
-
+    <!--These are the main buttons that are going ot be on the main page.
+    They probably wont stay as buttons like this but for the purpose of testing all the different pages the navigation buttons are just regular buttons-->
+    <RelativeLayout>
+        <Button x:Name="PostScoreButton" Clicked="PostScoreButton_Clicked" Text="Post Score" HeightRequest="60" RelativeLayout.XConstraint="{ConstraintExpression
+            Type=RelativeToParent,Property=Width,Factor=.0000,Constant=0}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Width,Factor=.3333,Constant=0}"/>
+        <Button x:Name="HandicapHistoryButton" Clicked="HandicapHistoryButton_Clicked" Text="Handicap History" HeightRequest="60" RelativeLayout.XConstraint="{ConstraintExpression
+            Type=RelativeToParent,Property=Width,Factor=.3333,Constant=0}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Width,Factor=.3333,Constant=0}"/>
+        <Button x:Name="SettingsButton" Clicked="SettingsButton_Clicked" Text="Settings" HeightRequest="60" RelativeLayout.XConstraint="{ConstraintExpression
+            Type=RelativeToParent,Property=Width,Factor=.6666,Constant=0}"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+            Property=Width,Factor=.3333,Constant=0}"/>
+    </RelativeLayout>
 </ContentPage>

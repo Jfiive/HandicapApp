@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GolfHandicapApp.CourseSelection"
+             Title="Select Course">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS">0, 20, 0, 0</On>
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout>
+                <Button x:Name="OpenPopup" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OpenPopup_Clicked" Text="Add New Course"></Button>
+            </StackLayout>
+
+            <ContentView x:Name="EnterCoursePopup" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="False" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Entry x:Name="CourseName" Margin="20, 20, 20, 10" Placeholder="Course Name"></Entry>
+                    <Entry x:Name="TeeName" Margin="20, 0, 20, 0" Placeholder="Tee Name"></Entry>
+                    <Entry x:Name="CourseRating" Keyboard="Numeric" Margin="20, 0, 20, 0" Placeholder="Rating (48-85)"></Entry>
+                    <Entry x:Name="CourseSlope" Keyboard="Numeric" Margin="20, 0, 20, 0" Placeholder="Slope (55-155)"></Entry>
+                    <Button x:Name="AddCourseButton" Margin="20, 0, 20, 0" Text="Add Course" Clicked="AddCourseButton_Clicked"></Button>
+                </StackLayout>
+            </ContentView>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
