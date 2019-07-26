@@ -11,27 +11,39 @@ namespace GolfHandicapApp
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class MainPage : ContentPage
+    public partial class MainPage : MasterDetailPage
     {
         public MainPage()
         {
             InitializeComponent();
-            //this should load the users current scores and put them in the blank space below the buttons
+            Detail = new NavigationPage(new MyScores());
+            IsPresented = false;
         }
 
-        private async void PostScoreButton_Clicked(object sender, EventArgs e)
+        private void MenuList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            await Navigation.PushAsync(new CourseSelection());
-        }
+            switch (e.SelectedItemIndex)
+            {
+                case 0:
+                    //the page for scores needs to be added so change this once it is
+                    Detail = new NavigationPage(new MyScores());
+                    IsPresented = false;
+                    break;
+                case 1:
+                    Detail = new NavigationPage(new CourseSelection());
+                    IsPresented = false;
+                    break;
 
-        private async void HandicapHistoryButton_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new HandicapHistory());
-        }
+                case 2:
+                    Detail = new NavigationPage(new HandicapHistory());
+                    IsPresented = false;
+                    break;
 
-        private async void SettingsButton_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new Settings());
+                case 3:
+                    Detail = new NavigationPage(new Settings());
+                    IsPresented = false;
+                    break;
+            }
         }
     }
 }

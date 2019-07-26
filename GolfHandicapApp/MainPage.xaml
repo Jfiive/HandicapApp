@@ -1,30 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="GolfHandicapApp.MainPage"
-             Title="Your Scores">
-    <ContentPage.Padding>
-        <OnPlatform x:TypeArguments="Thickness">
-            <On Platform="iOS">0, 20, 0, 0</On>
-        </OnPlatform>
-    </ContentPage.Padding>
-    <!--These are the main buttons that are going ot be on the main page.
-    They probably wont stay as buttons like this but for the purpose of testing all the different pages the navigation buttons are just regular buttons-->
-    <RelativeLayout>
-        <Button x:Name="PostScoreButton" Clicked="PostScoreButton_Clicked" Text="Post Score" HeightRequest="60" RelativeLayout.XConstraint="{ConstraintExpression
-            Type=RelativeToParent,Property=Width,Factor=.0000,Constant=0}"
-            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
-            Property=Width,Factor=.3333,Constant=0}"/>
-        <Button x:Name="HandicapHistoryButton" Clicked="HandicapHistoryButton_Clicked" Text="Handicap History" HeightRequest="60" RelativeLayout.XConstraint="{ConstraintExpression
-            Type=RelativeToParent,Property=Width,Factor=.3333,Constant=0}"
-            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
-            Property=Width,Factor=.3333,Constant=0}"/>
-        <Button x:Name="SettingsButton" Clicked="SettingsButton_Clicked" Text="Settings" HeightRequest="60" RelativeLayout.XConstraint="{ConstraintExpression
-            Type=RelativeToParent,Property=Width,Factor=.6666,Constant=0}"
-            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
-            Property=Width,Factor=.3333,Constant=0}"/>
-    </RelativeLayout>
-</ContentPage>
+             Title="Master Page">
+    <MasterDetailPage.Master>
+        <ContentPage Padding="10" Title="Master">
+            <ContentPage.Content>
+                <StackLayout>
+                    <ListView x:Name="MenuList" ItemSelected="MenuList_ItemSelected">
+                        <ListView.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Your Scores</x:String>
+                                <x:String>Post A Score</x:String>
+                                <x:String>Handicap History</x:String>
+                                <x:String>Settings</x:String>
+                            </x:Array>
+                        </ListView.ItemsSource>
+                    </ListView>
+                </StackLayout>
+            </ContentPage.Content>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <ContentPage Padding="10">
+            <StackLayout Margin="5,30,5,5">
+                <Label Text="Score Page"></Label>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
