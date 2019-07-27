@@ -4,10 +4,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="GolfHandicapApp.MainPage"
-             Title="Master Page">
+             x:Class="GolfHandicapApp.MainPage">
     <MasterDetailPage.Master>
-        <ContentPage Padding="10" Title="Master">
+        <ContentPage Title="Master">
             <ContentPage.Content>
                 <StackLayout>
                     <ListView x:Name="MenuList" ItemSelected="MenuList_ItemSelected">
@@ -24,11 +23,4 @@
             </ContentPage.Content>
         </ContentPage>
     </MasterDetailPage.Master>
-    <MasterDetailPage.Detail>
-        <ContentPage Padding="10">
-            <StackLayout Margin="5,30,5,5">
-                <Label Text="Score Page"></Label>
-            </StackLayout>
-        </ContentPage>
-    </MasterDetailPage.Detail>
 </MasterDetailPage>

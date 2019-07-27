@@ -29,6 +29,7 @@ namespace GolfHandicapApp
                     Detail = new NavigationPage(new MyScores());
                     IsPresented = false;
                     break;
+
                 case 1:
                     Detail = new NavigationPage(new CourseSelection());
                     IsPresented = false;
