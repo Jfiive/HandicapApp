@@ -25,11 +25,6 @@ namespace GolfHandicapApp
         {
             return _database.Insert(course);
         }
-        public Course GetCourse(int ID)
-        {
-            //might not have to actually have this one in here since when posting the score this information might already be there based on what they select
-            return _database.Table<Course>().FirstOrDefault(c => c.CourseID == ID);
-        }
         public List<Handicap> GetHandicaps()
         {
             return _database.Table<Handicap>().ToList();
@@ -65,6 +60,14 @@ namespace GolfHandicapApp
         public List<decimal> GetLowestScoresDifferentials(int Number)
         {
             return _database.Query<decimal>("SELECT TOP " + Number + " Differential FROM Scores ORDER BY Score");
+        }
+        public int DeleteCourse(int ID)
+        {
+            return _database.Delete<Course>(ID);
+        }
+        public int DeleteScore(int ID)
+        {
+            return _database.Delete<Scores>(ID);
         }
     }
 }

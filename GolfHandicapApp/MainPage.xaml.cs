@@ -24,23 +24,22 @@ namespace GolfHandicapApp
         {
             switch (e.SelectedItemIndex)
             {
-                case 0:
-                    //the page for scores needs to be added so change this once it is
+                case 0: //My Scores
                     Detail = new NavigationPage(new MyScores());
                     IsPresented = false;
                     break;
 
-                case 1:
+                case 1: //Post a Score
                     Detail = new NavigationPage(new CourseSelection());
                     IsPresented = false;
                     break;
 
-                case 2:
+                case 2: //Handicap History
                     Detail = new NavigationPage(new HandicapHistory());
                     IsPresented = false;
                     break;
 
-                case 3:
+                case 3: //Settings
                     Detail = new NavigationPage(new Settings());
                     IsPresented = false;
                     break;

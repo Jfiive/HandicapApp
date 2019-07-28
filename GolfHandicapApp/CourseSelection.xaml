@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="GolfHandicapApp.CourseSelection"
-             Title="Select Course">
+             Title="Select a Course">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <On Platform="iOS">0, 20, 0, 0</On>
@@ -14,19 +14,46 @@
     <ContentPage.Content>
         <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
-                <Button x:Name="OpenPopup" VerticalOptions="Center" HorizontalOptions="Center" Clicked="OpenPopup_Clicked" Text="Add New Course"></Button>
+                <Grid BackgroundColor="#4d4dff">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition Width="60"></ColumnDefinition>
+                        <ColumnDefinition Width="60"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" TextColor="White" Text="Course" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start"></Label>
+                    <Label Grid.Column="1" TextColor="White" Text="Tee" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Column="2" TextColor="White" Text="Rating" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Column="3" TextColor="White" Text="Slope" HorizontalOptions="FillAndExpand" VerticalTextAlignment="End"></Label>
+                </Grid>
+                <ListView x:Name="CourseList" ItemsSource="{Binding MyCourses}" ItemTapped="CourseList_ItemTapped">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="80"></ColumnDefinition>
+                                            <ColumnDefinition Width="60"></ColumnDefinition>
+                                            <ColumnDefinition Width="60"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" FontAttributes="Bold" Text="{Binding Name}"></Label>
+                                        <Label Grid.Column="1" Text="{Binding Tee}"></Label>
+                                        <Label Grid.Column="2" Text="{Binding Rating}"></Label>
+                                        <Label Grid.Column="3" Text="{Binding Slope}"></Label>
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
-            <ListView x:Name="CourseList" ItemsSource="{Binding MyCourses}" ItemTapped="CourseList_ItemTapped">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Name}" Detail="{Binding Tee}"></TextCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
             <ContentView x:Name="EnterCoursePopup" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="False" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <StackLayout Orientation="Vertical" HeightRequest="200" WidthRequest="300" BackgroundColor="White">
-                        <Entry x:Name="CourseName" Margin="20, 20, 20, 10" Placeholder="Course Name"></Entry>
+                    <StackLayout Orientation="Vertical" HeightRequest="295" WidthRequest="300" BackgroundColor="White">
+                        <ImageButton ClassId="CloseEnterCourse" Source="CloseButton.png" HeightRequest="20" HorizontalOptions="End" Margin="0, 5, 5, 0" Clicked="ClosePopup" BackgroundColor="White"></ImageButton>
+                        <Entry x:Name="CourseName" Margin="20, 0, 20, 0" Placeholder="Course Name"></Entry>
                         <Entry x:Name="TeeName" Margin="20, 0, 20, 0" Placeholder="Tee Name"></Entry>
                         <Entry x:Name="CourseRating" Keyboard="Numeric" Margin="20, 0, 20, 0" Placeholder="Rating (48-85)"></Entry>
                         <Entry x:Name="CourseSlope" Keyboard="Numeric" Margin="20, 0, 20, 0" Placeholder="Slope (55-155)"></Entry>
@@ -36,14 +63,40 @@
             </ContentView>
             <ContentView x:Name="EnterScorePopup" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="False" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <StackLayout Orientation="Vertical" HeightRequest="200" WidthRequest="300" BackgroundColor="White">
-                        <Entry x:Name="Score" Margin="20, 20, 20, 10" Placeholder="Score"></Entry>
-                        <Label Text="Date: "></Label><DatePicker x:Name="ScoreDate"></DatePicker>
-                        <CheckBox x:Name="NineHoles" CheckedChanged="NineHoles_CheckedChanged"></CheckBox>
-                        <CheckBox x:Name="EighteenHoles" CheckedChanged="EighteenHoles_CheckedChanged"></CheckBox>
+                    <StackLayout Orientation="Vertical" HeightRequest="295" WidthRequest="300" BackgroundColor="White">
+                        <ImageButton ClassId="CloseEnterScore" Source="CloseButton.png" HeightRequest="20" HorizontalOptions="End" Margin="0, 5, 5, 0" Clicked="ClosePopup" BackgroundColor="White"></ImageButton>
+                        <Entry x:Name="EnteredScore" Margin="20, 0, 20, 0" Keyboard="Numeric" Placeholder="Score"></Entry>
+                        <Label Text="Date: " Margin="20, 0, 20, 0"></Label><DatePicker Margin="20, 0, 20, 0" x:Name="ScoreDate"></DatePicker>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="20, 20, 20, 0">
+                            <Label Text="Front:"></Label>
+                            <CheckBox x:Name="FrontNine" CheckedChanged="FrontNine_CheckedChanged"></CheckBox>
+                            <Label Text="18 Holes:"></Label>
+                            <CheckBox x:Name="EighteenHoles" CheckedChanged="EighteenHoles_CheckedChanged"></CheckBox>
+                            <Label Text="Back:"></Label>
+                            <CheckBox x:Name="BackNine" CheckedChanged="BackNine_CheckedChanged"></CheckBox>
+                        </StackLayout>
+                        <Button x:Name="PostScore" Text="Post Score" Margin="20, 20, 20, 0" HorizontalOptions="Center" Clicked="PostScore_Clicked"></Button>
+                    </StackLayout>
+                </StackLayout>
+            </ContentView>
+            <ContentView x:Name="CourseClickMenu" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="False" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <StackLayout Orientation="Vertical" HeightRequest="120" WidthRequest="300" BackgroundColor="White">
+                        <ImageButton ClassId="CloseCourseClickMenu" Source="CloseButton.png" HeightRequest="20" HorizontalOptions="End" Margin="0, 5, 5, 0" Clicked="ClosePopup" BackgroundColor="White"></ImageButton>
+                        <ListView x:Name="CourseSelectMenu" ItemSelected="CourseSelectMenu_ItemSelected">
+                            <ListView.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>Post a Score</x:String>
+                                    <x:String>Delete Course</x:String>
+                                </x:Array>
+                            </ListView.ItemsSource>
+                        </ListView>
                     </StackLayout>
                 </StackLayout>
             </ContentView>
         </AbsoluteLayout>
     </ContentPage.Content>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="AddNewCourse" IconImageSource="AddButtonWhite.png" Clicked="OpenPopup_Clicked"></ToolbarItem>
+    </ContentPage.ToolbarItems>
 </ContentPage>

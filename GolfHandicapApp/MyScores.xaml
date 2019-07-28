@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="GolfHandicapApp.MyScores">
+             x:Class="GolfHandicapApp.MyScores"
+             Title="Your Scores">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
             <On Platform="iOS">0, 20, 0, 0</On>
@@ -12,9 +13,56 @@
     </ContentPage.Padding>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="My Scores Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label FontSize="Large" HorizontalOptions="CenterAndExpand">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Handicap: "></Span>
+                        <Span x:Name="CurrentHandicapLabel" Text=""></Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Grid BackgroundColor="#4d4dff">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="60"></ColumnDefinition>
+                    <ColumnDefinition Width="60"></ColumnDefinition>
+                    <ColumnDefinition Width="60"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" TextColor="White" Text="Date" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start"></Label>
+                <Label Grid.Column="1" TextColor="White" Text="Score" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
+                <Label Grid.Column="2" TextColor="White" Text="Type" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
+                <Label Grid.Column="3" TextColor="White" Text="Diff" HorizontalOptions="FillAndExpand" VerticalTextAlignment="End"></Label>
+            </Grid>
+            <ListView x:Name="ScoreList" ItemsSource="{Binding ScoreListData}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                        <ColumnDefinition Width="60"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span FontAttributes="Bold" Text="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"></Span>
+                                                <Span Text="&#x0a;"></Span>
+                                                <Span Text="{Binding Name}"></Span>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label Grid.Column="1" Text="{Binding Score}"></Label>
+                                    <Label Grid.Column="2" Text="{Binding RoundType}"></Label>
+                                    <Label Grid.Column="3" Text="{Binding Differential}"></Label>
+                                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

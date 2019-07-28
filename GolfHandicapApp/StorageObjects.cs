@@ -29,7 +29,7 @@ namespace GolfHandicapApp
         public DateTime Date { get; set; }
         public int Score { get; set; }
         public decimal Differential { get; set; }
-        public int RoundType { get; set; }
+        public string RoundType { get; set; }
         public int CourseID { get; set; }
     }
     public class Handicap
@@ -46,7 +46,7 @@ namespace GolfHandicapApp
         public DateTime Date { get; set; }
         public int Score { get; set; }
         public decimal Differential { get; set; }
-        public int RoundType { get; set; }
+        public string RoundType { get; set; }
         public string Name { get; set; }
         public decimal Rating { get; set; }
         public decimal Slope { get; set; }
