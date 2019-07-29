@@ -179,7 +179,6 @@ namespace GolfHandicapApp
             score.Date = ScoreDate.Date;
             score.Differential = Math.Round((score.Score - selectedCourse.Rating) * 113 / selectedCourse.Slope, 2);
             score.CourseID = selectedCourse.CourseID;
-            var test = FrontNine.IsChecked;
             if (FrontNine.IsChecked)
             {
                 score.RoundType = "Front";
@@ -190,7 +189,7 @@ namespace GolfHandicapApp
             }
             else
             {
-                score.RoundType = "Full";
+                score.RoundType = "18";
             }
             App.Database.SaveScore(score);
             Navigation.PushAsync(new MyScores());
