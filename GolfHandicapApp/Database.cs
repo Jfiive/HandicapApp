@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 using SQLite;
 using System.Linq;
 
@@ -46,6 +47,14 @@ namespace GolfHandicapApp
         {
             return _database.Update(course);
         }
+        public int UpdateScore (Scores score)
+        {
+            return _database.Update(score);
+        }
+        public Scores GetScore(int ID)
+        {
+            return _database.Table<Scores>().FirstOrDefault(o => o.ScoreID == ID);
+        }
         public decimal GetCurrentHandicap()
         {
             return _database.Table<Handicap>().OrderByDescending(o => o.Date).FirstOrDefault().Number;
@@ -81,6 +90,98 @@ namespace GolfHandicapApp
         public int DeleteScore(int ID)
         {
             return _database.Delete<Scores>(ID);
+        }
+        public void CalculateHandicap()
+        {
+            var ScoreCount = GetNumberOfScores();
+            if (ScoreCount < 5)
+            {
+                return;
+            }
+
+            var ScoresToUse = 0;
+            switch (ScoreCount)
+            {
+                case 5:
+                case 6:
+                    ScoresToUse = 1;
+                    break;
+
+                case 7:
+                case 8:
+                    ScoresToUse = 2;
+                    break;
+
+                case 9:
+                case 10:
+                    ScoresToUse = 3;
+                    break;
+
+                case 11:
+                case 12:
+                    ScoresToUse = 4;
+                    break;
+
+                case 13:
+                case 14:
+                    ScoresToUse = 5;
+                    break;
+
+                case 15:
+                case 16:
+                    ScoresToUse = 6;
+                    break;
+
+                case 17:
+                    ScoresToUse = 7;
+                    break;
+
+                case 18:
+                    ScoresToUse = 8;
+                    break;
+
+                case 19:
+                    ScoresToUse = 9;
+                    break;
+
+                default:
+                    if (ScoreCount >= 20)
+                    {
+                        ScoresToUse = 10;
+                    }
+                    break;
+            }
+
+            var LowestScores = GetLowestScoresDifferentials(ScoresToUse);
+            var handicap = LowestScores.Average() * 0.96m;
+            //eventually make every decimal in the database to be a double since the handicap has to be a double and itll make things a lot easier
+            handicap = Convert.ToDecimal(handicap.ToString("0.#"));
+            //needs to also take into account for 9 hole handicap scores as well eventually
+            if (Preferences.ContainsKey("Handicap18"))
+            {
+                //only insert the handicap into the handicap history table if it is different than the current handicap
+                if (Convert.ToDouble(handicap) != Preferences.Get("Handicap18", -1.0))
+                {
+                    var hdcp = new Handicap
+                    {
+                        Date = DateTime.Today,
+                        Number = handicap
+                    };
+                    SaveHandicap(hdcp);
+                }
+                Preferences.Set("Handicap18", Convert.ToDouble(handicap));
+            }
+            else
+            {
+                //this is the first time the user has gotten 5 scores to get a handicap calculated so insert the handicap as the first history
+                var hdcp = new Handicap
+                {
+                    Date = DateTime.Today,
+                    Number = handicap
+                };
+                Preferences.Set("Handicap18", Convert.ToDouble(handicap));
+                SaveHandicap(hdcp);
+            }
         }
     }
 }
