@@ -22,7 +22,9 @@ namespace GolfHandicapApp
 
         private void MenuList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            switch (e.SelectedItemIndex)
+            var index = e.SelectedItemIndex;
+            MenuList.SelectedItem = null;
+            switch (index)
             {
                 case 0: //My Scores
                     Detail = new NavigationPage(new MyScores());

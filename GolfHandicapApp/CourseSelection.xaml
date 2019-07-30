@@ -71,7 +71,7 @@
                             <Label Text="Front:"></Label>
                             <CheckBox x:Name="FrontNine" CheckedChanged="FrontNine_CheckedChanged"></CheckBox>
                             <Label Text="18 Holes:"></Label>
-                            <CheckBox x:Name="EighteenHoles" CheckedChanged="EighteenHoles_CheckedChanged"></CheckBox>
+                            <CheckBox x:Name="EighteenHoles" CheckedChanged="EighteenHoles_CheckedChanged" IsChecked="True"></CheckBox>
                             <Label Text="Back:"></Label>
                             <CheckBox x:Name="BackNine" CheckedChanged="BackNine_CheckedChanged"></CheckBox>
                         </StackLayout>

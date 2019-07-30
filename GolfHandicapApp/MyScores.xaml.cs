@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
 namespace GolfHandicapApp
 {
@@ -19,26 +20,23 @@ namespace GolfHandicapApp
             InitializeComponent();
             scorelistdata = App.Database.GetPastScores();
             ScoreList.ItemsSource = scorelistdata;
-            if (App.Database.GetNumberOfScores() <= 5)
+            if (App.Database.GetNumberOfScores() < 5)
             {
                 HandicapLabel.Text = "5+ scores are needed for a handicap.";
-                //HandicapDisplay.FontSize = 9;
             }
-            else
+            
+            //needs to also do this with 9 hole handicap if they have that set up
+            if (Preferences.ContainsKey("Handicap18"))
             {
                 HandicapLabel.Text = "Handicap: ";
-            }
-
-            //needs to also do this with 9 hole handicap if they have that set up
-            if (Application.Current.Properties.ContainsKey("Handicap18"))
-            {
-                HandicapNumberLabel.Text = Application.Current.Properties["Handicap18"].ToString();
+                HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
             }
         }
 
         private void ScoreClickMenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            ScoreClickMenu.IsVisible = false;
+            ScoreClickPopup.IsVisible = false;
+            ScoreClickMenu.SelectedItem = null;
             var selectedScore = (DetailedScore)ScoreList.SelectedItem;
             switch (e.SelectedItemIndex)
             {
@@ -50,6 +48,15 @@ namespace GolfHandicapApp
                     App.Database.DeleteScore(selectedScore.ScoreID);
                     scorelistdata = App.Database.GetPastScores();
                     ScoreList.ItemsSource = scorelistdata;
+                    if (scorelistdata.Count < 5)
+                    {
+                        HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                        if (Preferences.ContainsKey("Handicap18"))
+                        {
+                            Preferences.Remove("Handicap18");
+                            HandicapNumberLabel.Text = "";
+                        }
+                    }
                     break;
             }
         }

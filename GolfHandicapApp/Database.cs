@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 using SQLite;
+using System.Linq;
 
 namespace GolfHandicapApp
 {
@@ -35,7 +36,7 @@ namespace GolfHandicapApp
         }
         public List<DetailedScore> GetPastScores()
         {
-            return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Course.Name, Course.Rating, Course.Slope, Course.Tee FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID"); ;
+            return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Course.Name, Course.Rating, Course.Slope, Course.Tee FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID ORDER BY Scores.Date DESC"); ;
         }
         public int SaveScore(Scores score)
         {
@@ -59,7 +60,19 @@ namespace GolfHandicapApp
         }
         public List<decimal> GetLowestScoresDifferentials(int Number)
         {
-            return _database.Query<decimal>("SELECT TOP " + Number + " Differential FROM Scores ORDER BY Score");
+            var scorelist = _database.Table<Scores>().ToList();
+            if (Number < 10)
+            {
+                //this turns the scorelist into the lowest X number of scores
+                scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+            }
+            else
+            {
+                //needs to take the last 20 scores instead of using all the scores that are available
+                scorelist = scorelist.OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+            }
+            return scorelist.Select(o => o.Differential).ToList();
         }
         public int DeleteCourse(int ID)
         {
