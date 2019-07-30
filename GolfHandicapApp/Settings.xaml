@@ -12,6 +12,9 @@
     </ContentPage.Padding>
     <ContentPage.Content>
         <StackLayout>
+            <!--the settings that need to be added: separate 9 hole and 18 hole scores to calculate handicaps separately, date display  mm/dd/yyy or dd/mm/yyyy, show which scores are being used to calculate handicap
+                display average score
+            -->
             <Label Text="Settings Page"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
