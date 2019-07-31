@@ -15,8 +15,24 @@ namespace GolfHandicapApp
     {
         public Settings()
         {
-            //use the Xamarin.Essentials.Preferences class to store settings data. These settings persist and will only be cleared if said so or if the user uninstalls without android back up which is on by default
             InitializeComponent();
+            //switch all the switches to the saved settings
+            if (Preferences.ContainsKey("SeparateHandicaps"))
+            {
+                SeparateHandicaps.IsToggled = Preferences.Get("Separatehandicaps", false);
+            }
+            if (Preferences.ContainsKey("DisplayEUDate"))
+            {
+                DisplayEUDate.IsToggled = Preferences.Get("DisplayEUDate", false);
+            }
+            if (Preferences.ContainsKey("HighlightScores"))
+            {
+                HighlightScores.IsToggled = Preferences.Get("HighlightScores", false);
+            }
+            if (Preferences.ContainsKey("DisplayAverageScore"))
+            {
+                DisplayAverageScore.IsToggled = Preferences.Get("DisplayAverageScore", false);
+            }
         }
     }
 }

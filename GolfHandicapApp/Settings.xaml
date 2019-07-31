@@ -16,9 +16,23 @@
             <!--the settings that need to be added: separate 9 hole and 18 hole scores to calculate handicaps separately, date display  mm/dd/yyy or dd/mm/yyyy, show which scores are being used to calculate handicap
                 display average score
             -->
-            <Label Text="Settings Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Horizontal" Margin="5, 10, 5, 30">
+                <Label Text="Keep 9 and 18 hole handicaps" FontSize="Medium"></Label>
+                <Switch x:Name="SeparateHandicaps" HorizontalOptions="End"></Switch>
+            </StackLayout>
+            <!--could possibly add a single item treeview that will expand down with a more detailed explanation of what these options do-->
+            <StackLayout Orientation="Horizontal" Margin="5, 0, 5, 30">
+                <Label Text="Display date as dd/mm/yyyy" FontSize="Medium"></Label>
+                <Switch x:Name="DisplayEUDate" HorizontalOptions="End"></Switch>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="5, 0, 5, 30">
+                <Label Text="Highlight scores used to calculate handicap" FontSize="Medium"></Label>
+                <Switch x:Name="HighlightScores" HorizontalOptions="End"></Switch>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Margin="5, 0, 5, 30">
+                <Label Text="Display average score" FontSize="Medium"></Label>
+                <Switch x:Name="DisplayAverageScore"></Switch>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
