@@ -29,7 +29,7 @@ namespace GolfHandicapApp
         }
         public List<Handicap> GetHandicaps()
         {
-            return _database.Table<Handicap>().ToList();
+            return _database.Table<Handicap>().OrderByDescending(o => o.Date).ToList();
         }
         public int SaveHandicap(Handicap handicap)
         {

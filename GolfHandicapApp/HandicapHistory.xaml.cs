@@ -12,9 +12,13 @@ namespace GolfHandicapApp
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HandicapHistory : ContentPage
     {
+        private List<Handicap> handicaplistdata = new List<Handicap>();
+        public List<Handicap> HandicapListData { get { return handicaplistdata; } }
         public HandicapHistory()
         {
             InitializeComponent();
+            handicaplistdata = App.Database.GetHandicaps();
+            HandicapHistoryList.ItemsSource = handicaplistdata;
         }
     }
 }
