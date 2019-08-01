@@ -31,6 +31,21 @@ namespace GolfHandicapApp
                 HandicapLabel.Text = "Handicap: ";
                 HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
             }
+            if (Preferences.ContainsKey("DisplayEUDate"))
+            {
+                if (Preferences.Get("DisplayEUDate", false))
+                {
+                    ScoreList.ItemTemplate = (DataTemplate)Resources["EUDate"];
+                }
+                else
+                {
+                    ScoreList.ItemTemplate = (DataTemplate)Resources["USDate"];
+                }
+            }
+            else
+            {
+                ScoreList.ItemTemplate = (DataTemplate)Resources["USDate"];
+            }
         }
 
         private void ScoreClickMenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)

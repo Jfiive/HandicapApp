@@ -11,6 +11,38 @@
             <On Platform="iOS">0, 20, 0, 0</On>
         </OnPlatform>
     </ContentPage.Padding>
+    
+    <ContentPage.Resources>
+        <DataTemplate x:Key="USDate">
+            <ViewCell>
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"></Label>
+                        <Label Grid.Column="1" Text="{Binding Number}"></Label>
+                    </Grid>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="EUDate">
+            <ViewCell>
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Date, StringFormat='{}{0:dd/MM/yyyy}'}"></Label>
+                        <Label Grid.Column="1" Text="{Binding Number}"></Label>
+                    </Grid>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
@@ -23,22 +55,7 @@
                     <Label Grid.Column="1" TextColor="White" Text="Handicap" HorizontalOptions="FillAndExpand"></Label>
                 </Grid>
                 <ListView x:Name="HandicapHistoryList" ItemsSource="{Binding HandicapHistoryData}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Text="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"></Label>
-                                        <Label Grid.Column="1" Text="{Binding Number}"></Label>
-                                    </Grid>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
+                    
                 </ListView>
             </StackLayout>
         </AbsoluteLayout>
