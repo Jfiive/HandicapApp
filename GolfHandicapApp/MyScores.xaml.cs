@@ -31,21 +31,7 @@ namespace GolfHandicapApp
                 HandicapLabel.Text = "Handicap: ";
                 HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
             }
-            if (Preferences.ContainsKey("DisplayEUDate"))
-            {
-                if (Preferences.Get("DisplayEUDate", false))
-                {
-                    ScoreList.ItemTemplate = (DataTemplate)Resources["EUDate"];
-                }
-                else
-                {
-                    ScoreList.ItemTemplate = (DataTemplate)Resources["USDate"];
-                }
-            }
-            else
-            {
-                ScoreList.ItemTemplate = (DataTemplate)Resources["USDate"];
-            }
+            SetDataType();
         }
 
         private void ScoreClickMenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -189,6 +175,36 @@ namespace GolfHandicapApp
             {
                 HandicapLabel.Text = "Handicap: ";
                 HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
+            }
+        }
+        private void SetDataType()
+        {
+            var DisplayEUDate = false;
+            var HighlightScores = false;
+            if (Preferences.ContainsKey("DisplayEUDate"))
+            {
+                DisplayEUDate = Preferences.Get("DisplayEUDate", false);
+            }
+            if (Preferences.ContainsKey("HighlightScores"))
+            {
+                HighlightScores = Preferences.Get("HighlightScores", false);
+            }
+
+            if (DisplayEUDate == true && HighlightScores == true) //eu date with highlighted scores
+            {
+                ScoreList.ItemTemplate = (DataTemplate)Resources["EUDateHighlight"];
+            }
+            else if (DisplayEUDate == true && HighlightScores == false) //eu date with no highlights
+            {
+                ScoreList.ItemTemplate = (DataTemplate)Resources["EUDate"];
+            }
+            else if (DisplayEUDate == false && HighlightScores == true) //US date with highlights
+            {
+                ScoreList.ItemTemplate = (DataTemplate)Resources["USDateHighlight"];
+            }
+            else if (DisplayEUDate == false && HighlightScores == false)
+            {
+                ScoreList.ItemTemplate = (DataTemplate)Resources["USDate"];
             }
         }
     }

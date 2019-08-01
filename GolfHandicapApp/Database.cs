@@ -37,7 +37,28 @@ namespace GolfHandicapApp
         }
         public List<DetailedScore> GetPastScores()
         {
-            return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Course.Name, Course.Rating, Course.Slope, Course.Tee FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID ORDER BY Scores.Date DESC"); ;
+            return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, Course.Rating, Course.Slope, Course.Tee FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID ORDER BY Scores.Date DESC"); ;
+        }
+        public void UpdateLowestScoreFlags(int Number)
+        {
+            _database.Execute("UPDATE Scores SET UsedForCalc = false");
+            var scorelist = _database.Table<Scores>().ToList();
+            if (Number < 10)
+            {
+                //this turns the scorelist into the lowest X number of scores
+                scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+            }
+            else
+            {
+                //needs to take the last 20 scores instead of using all the scores that are available
+                scorelist = scorelist.OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+            }
+            foreach (var item in scorelist)
+            {
+                item.UsedForCalc = true;
+                UpdateScore(item);
+            }
         }
         public int SaveScore(Scores score)
         {
@@ -153,6 +174,7 @@ namespace GolfHandicapApp
             }
 
             var LowestScores = GetLowestScoresDifferentials(ScoresToUse);
+            UpdateLowestScoreFlags(ScoresToUse);
             var handicap = LowestScores.Average() * 0.96m;
             //eventually make every decimal in the database to be a double since the handicap has to be a double and itll make things a lot easier
             handicap = Convert.ToDecimal(handicap.ToString("0.#"));

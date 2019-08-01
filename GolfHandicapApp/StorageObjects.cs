@@ -31,6 +31,7 @@ namespace GolfHandicapApp
         public decimal Differential { get; set; }
         public string RoundType { get; set; }
         public int CourseID { get; set; }
+        public bool UsedForCalc { get; set; }
     }
     public class Handicap
     {
@@ -47,6 +48,7 @@ namespace GolfHandicapApp
         public int Score { get; set; }
         public decimal Differential { get; set; }
         public string RoundType { get; set; }
+        public bool UsedForCalc { get; set; }
         public string Name { get; set; }
         public decimal Rating { get; set; }
         public decimal Slope { get; set; }

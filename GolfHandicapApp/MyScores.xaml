@@ -12,7 +12,7 @@
             <On Platform="iOS">0, 20, 0, 0</On>
         </OnPlatform>
     </ContentPage.Padding>
-    
+
     <ContentPage.Resources>
         <DataTemplate x:Key="USDate">
             <ViewCell>
@@ -44,6 +44,69 @@
             <ViewCell>
                 <StackLayout>
                     <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Margin="0, 0, 5, 0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding Date, StringFormat='{}{0:dd/MM/yyyy}'}"></Span>
+                                    <Span Text="&#x0a;"></Span>
+                                    <Span Text="{Binding Name}"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Grid.Column="1" Text="{Binding Score}"></Label>
+                        <Label Grid.Column="2" Text="{Binding RoundType}"></Label>
+                        <Label Grid.Column="3" Text="{Binding Differential}"></Label>
+                    </Grid>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="USDateHighlight">
+            <ViewCell>
+                <StackLayout>
+                    <Grid>
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid" Binding="{Binding UsedForCalc}" Value="True">
+                                <Setter Property="BackgroundColor" Value="#ffff9b"></Setter>
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="60"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Margin="0, 0, 5, 0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span FontAttributes="Bold" Text="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"></Span>
+                                    <Span Text="&#x0a;"></Span>
+                                    <Span Text="{Binding Name}"></Span>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Grid.Column="1" Text="{Binding Score}"></Label>
+                        <Label Grid.Column="2" Text="{Binding RoundType}"></Label>
+                        <Label Grid.Column="3" Text="{Binding Differential}"></Label>
+                    </Grid>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+        <DataTemplate x:Key="EUDateHighlight">
+            <ViewCell>
+                <StackLayout>
+                    <Grid>
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid" Binding="{Binding UsedForCalc}" Value="True">
+                                <Setter Property="BackgroundColor" Value="#ffff9b"></Setter>
+                            </DataTrigger>
+                        </Grid.Triggers>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="60"></ColumnDefinition>
