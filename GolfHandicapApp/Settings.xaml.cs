@@ -34,5 +34,37 @@ namespace GolfHandicapApp
                 DisplayAverageScore.IsToggled = Preferences.Get("DisplayAverageScore", false);
             }
         }
+
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            if (Description.IsVisible)
+            {
+                Description.IsVisible = false;
+            }
+            else
+            {
+                Description.IsVisible = true;
+            }
+        }
+
+        private void SeparateHandicaps_Toggled(object sender, ToggledEventArgs e)
+        {
+            Preferences.Set("SeparateHandicaps", SeparateHandicaps.IsToggled);
+        }
+
+        private void DisplayEUDate_Toggled(object sender, ToggledEventArgs e)
+        {
+            Preferences.Set("DisplayEUDate", DisplayEUDate.IsToggled);
+        }
+
+        private void HighlightScores_Toggled(object sender, ToggledEventArgs e)
+        {
+            Preferences.Set("HighlightScores", HighlightScores.IsToggled);
+        }
+
+        private void DisplayAverageScore_Toggled(object sender, ToggledEventArgs e)
+        {
+            Preferences.Set("DisplayAverageScore", DisplayAverageScore.IsToggled);
+        }
     }
 }
