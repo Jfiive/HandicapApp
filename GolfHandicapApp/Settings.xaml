@@ -41,7 +41,7 @@
                 <Label Grid.Column="0" Text="Display date as dd/mm/yyyy" FontSize="Medium"></Label>
                 <Switch Grid.Column="1" x:Name="DisplayEUDate" Toggled="DisplayEUDate_Toggled"></Switch>
             </Grid>
-            
+
             <Grid Margin="5, 0, 5, 30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -52,18 +52,6 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Text="Highlight scores used to calculate handicap" FontSize="Medium"></Label>
                 <Switch Grid.Column="1" x:Name="HighlightScores" Toggled="HighlightScores_Toggled"></Switch>
-            </Grid>
-            
-            <Grid Margin="5, 0, 5, 30">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="50"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Label Grid.Column="0" Text="Display average score" FontSize="Medium"></Label>
-                <Switch Grid.Column="1" x:Name="DisplayAverageScore" Toggled="DisplayAverageScore_Toggled"></Switch>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

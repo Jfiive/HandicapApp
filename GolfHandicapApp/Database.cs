@@ -120,59 +120,7 @@ namespace GolfHandicapApp
                 return;
             }
 
-            var ScoresToUse = 0;
-            switch (ScoreCount)
-            {
-                case 5:
-                case 6:
-                    ScoresToUse = 1;
-                    break;
-
-                case 7:
-                case 8:
-                    ScoresToUse = 2;
-                    break;
-
-                case 9:
-                case 10:
-                    ScoresToUse = 3;
-                    break;
-
-                case 11:
-                case 12:
-                    ScoresToUse = 4;
-                    break;
-
-                case 13:
-                case 14:
-                    ScoresToUse = 5;
-                    break;
-
-                case 15:
-                case 16:
-                    ScoresToUse = 6;
-                    break;
-
-                case 17:
-                    ScoresToUse = 7;
-                    break;
-
-                case 18:
-                    ScoresToUse = 8;
-                    break;
-
-                case 19:
-                    ScoresToUse = 9;
-                    break;
-
-                default:
-                    if (ScoreCount >= 20)
-                    {
-                        ScoresToUse = 10;
-                    }
-                    break;
-            }
-
+            var ScoresToUse = GetNumberOfScoresToUse(ScoreCount);
             var LowestScores = GetLowestScoresDifferentials(ScoresToUse);
             UpdateLowestScoreFlags(ScoresToUse);
             var handicap = LowestScores.Average() * 0.96m;
@@ -203,6 +151,58 @@ namespace GolfHandicapApp
                 };
                 Preferences.Set("Handicap18", Convert.ToDouble(handicap));
                 SaveHandicap(hdcp);
+            }
+        }
+        public void RecalculateHandicaps()
+        {
+
+        }
+        private int GetNumberOfScoresToUse(int ScoreCount)
+        {
+            switch (ScoreCount)
+            {
+                case 5:
+                case 6:
+                    return 1;
+
+                case 7:
+                case 8:
+                    return 2;
+
+                case 9:
+                case 10:
+                    return 3;
+
+                case 11:
+                case 12:
+                    return 4;
+
+                case 13:
+                case 14:
+                    return 5;
+
+                case 15:
+                case 16:
+                    return 6;
+
+                case 17:
+                    return 7;
+
+                case 18:
+                    return 8;
+
+                case 19:
+                    return 9;
+
+                default:
+                    if (ScoreCount >= 20)
+                    {
+                        return 10;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
             }
         }
     }

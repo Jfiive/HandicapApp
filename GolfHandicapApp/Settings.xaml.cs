@@ -29,10 +29,6 @@ namespace GolfHandicapApp
             {
                 HighlightScores.IsToggled = Preferences.Get("HighlightScores", false);
             }
-            if (Preferences.ContainsKey("DisplayAverageScore"))
-            {
-                DisplayAverageScore.IsToggled = Preferences.Get("DisplayAverageScore", false);
-            }
         }
 
         private void ImageButton_Clicked(object sender, EventArgs e)
@@ -60,11 +56,6 @@ namespace GolfHandicapApp
         private void HighlightScores_Toggled(object sender, ToggledEventArgs e)
         {
             Preferences.Set("HighlightScores", HighlightScores.IsToggled);
-        }
-
-        private void DisplayAverageScore_Toggled(object sender, ToggledEventArgs e)
-        {
-            Preferences.Set("DisplayAverageScore", DisplayAverageScore.IsToggled);
         }
     }
 }

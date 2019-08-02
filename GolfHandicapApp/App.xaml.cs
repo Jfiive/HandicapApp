@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.IO;
 using System.Linq;
+using Xamarin.Essentials;
 
 namespace GolfHandicapApp
 {
@@ -27,7 +28,18 @@ namespace GolfHandicapApp
         public App()
         {
             InitializeComponent();
-
+            if (!Preferences.ContainsKey("SeparateHandicaps"))
+            {
+                Preferences.Set("SeparateHandicaps", false);
+            }
+            if (!Preferences.ContainsKey("DisplayEUDate"))
+            {
+                Preferences.Set("DisplayEUDate", false);
+            }
+            if (!Preferences.ContainsKey("HighlightScores"))
+            {
+                Preferences.Set("HighlightScores", false);
+            }
             MainPage = new MainPage();
         }
 
