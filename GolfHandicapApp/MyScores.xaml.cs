@@ -20,17 +20,30 @@ namespace GolfHandicapApp
             InitializeComponent();
             scorelistdata = App.Database.GetPastScores();
             ScoreList.ItemsSource = scorelistdata;
-            if (App.Database.GetNumberOfScores() < 5)
-            {
-                HandicapLabel.Text = "5+ scores are needed for a handicap.";
-            }
             
-            //needs to also do this with 9 hole handicap if they have that set up
             if (Preferences.ContainsKey("Handicap18"))
             {
                 HandicapLabel.Text = "Handicap: ";
                 HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
             }
+            if (Preferences.ContainsKey("Handicap9"))
+            {
+                HandicapLabel9.Text = "Handicap 9: ";
+                HandicapNumberLabel9.Text = Preferences.Get("Handicap9", -1.0).ToString();
+            }
+            if (Preferences.ContainsKey("AverageScore"))
+            {
+                AverageLabel.Text = "Average: ";
+                AverageNumberLabel.Text = Preferences.Get("AverageScore", -1.0).ToString();
+            }
+
+            if (App.Database.GetNumberOfScores() < 5)
+            {
+                HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                HandicapDisplay9.IsVisible = false;
+                AverageDisplay.IsVisible = false;
+            }
+            SetScoreTypeVisibility();
             SetDataType();
         }
 
@@ -205,6 +218,37 @@ namespace GolfHandicapApp
             else if (DisplayEUDate == false && HighlightScores == false)
             {
                 ScoreList.ItemTemplate = (DataTemplate)Resources["USDate"];
+            }
+        }
+        private void SetScoreTypeVisibility()
+        {
+            if (Preferences.ContainsKey("Handicap9") && !Preferences.ContainsKey("AverageScore"))
+            {
+                HandicapDisplay.HorizontalOptions = LayoutOptions.Start;
+                HandicapDisplay9.HorizontalOptions = LayoutOptions.End;
+                HandicapDisplay9.IsVisible = true;
+                AverageDisplay.IsVisible = false;
+            }
+            else if (!Preferences.ContainsKey("Handicap9") && Preferences.ContainsKey("AverageScore"))
+            {
+                HandicapDisplay.HorizontalOptions = LayoutOptions.Start;
+                AverageDisplay.HorizontalOptions = LayoutOptions.End;
+                AverageDisplay.IsVisible = true;
+                HandicapDisplay9.IsVisible = false;
+            }
+            else if (Preferences.ContainsKey("Handicap9") && Preferences.ContainsKey("AverageScore"))
+            {
+                HandicapDisplay.HorizontalOptions = LayoutOptions.Start;
+                HandicapDisplay9.HorizontalOptions = LayoutOptions.Center;
+                AverageDisplay.HorizontalOptions = LayoutOptions.End;
+                AverageDisplay.IsVisible = true;
+                HandicapDisplay9.IsVisible = true;
+            }
+            else if (!Preferences.ContainsKey("Handicap9") && !Preferences.ContainsKey("AverageScore"))
+            {
+                HandicapDisplay.HorizontalOptions = LayoutOptions.CenterAndExpand;
+                HandicapDisplay9.IsVisible = false;
+                AverageDisplay.IsVisible = false;
             }
         }
     }

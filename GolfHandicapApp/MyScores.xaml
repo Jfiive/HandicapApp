@@ -134,14 +134,32 @@
     <ContentPage.Content>
         <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
-                <Label x:Name="HandicapDisplay" FontSize="Large" HorizontalOptions="CenterAndExpand">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span x:Name="HandicapLabel" Text="Handicap: "></Span>
-                            <Span x:Name="HandicapNumberLabel" Text=""></Span>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+                <StackLayout Orientation="Horizontal">
+                    <Label x:Name="HandicapDisplay" FontSize="Large">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span x:Name="HandicapLabel" Text="Handicap: "></Span>
+                                <Span x:Name="HandicapNumberLabel" Text=""></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label x:Name="HandicapDisplay9" FontSize="Large" IsVisible="False">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span x:Name="HandicapLabel9" Text="Handicap 9: "></Span>
+                                <Span x:Name="HandicapNumberLabel9" Text=""></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label x:Name="AverageDisplay" FontSize="Large" IsVisible="False">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span x:Name="AverageLabel" Text="Average: "></Span>
+                                <Span x:Name="AverageNumberLabel" Text=""></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
                 <Grid BackgroundColor="#4d4dff">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
