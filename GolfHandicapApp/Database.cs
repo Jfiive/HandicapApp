@@ -41,7 +41,7 @@ namespace GolfHandicapApp
         }
         public void UpdateLowestScoreFlags(int Number)
         {
-            _database.Execute("UPDATE Scores SET UsedForCalc = false");
+            _database.Execute("UPDATE Scores SET UsedForCalc = 0");
             var scorelist = _database.Table<Scores>().ToList();
             if (Number < 10)
             {
