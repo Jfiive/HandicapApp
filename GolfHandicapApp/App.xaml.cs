@@ -28,10 +28,6 @@ namespace GolfHandicapApp
         public App()
         {
             InitializeComponent();
-            if (!Preferences.ContainsKey("SeparateHandicaps"))
-            {
-                Preferences.Set("SeparateHandicaps", false);
-            }
             if (!Preferences.ContainsKey("DisplayEUDate"))
             {
                 Preferences.Set("DisplayEUDate", false);

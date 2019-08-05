@@ -16,20 +16,6 @@
             <!--the settings that need to be added: separate 9 hole and 18 hole scores to calculate handicaps separately, date display  mm/dd/yyy or dd/mm/yyyy, show which scores are being used to calculate handicap
                 display average score
             -->
-            <Grid Margin="5, 0, 5, 0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="50"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Label Grid.Column="0" Text="Keep 9 and 18 hole handicaps" FontSize="Medium"></Label>
-                <ImageButton Grid.Column="0" Clicked="ImageButton_Clicked" Source="HelpButton.png" HeightRequest="25" BackgroundColor="White" HorizontalOptions="End" Margin="0, 0, 75, 0"></ImageButton>
-                <Switch Grid.Column="1" x:Name="SeparateHandicaps" Toggled="SeparateHandicaps_Toggled"></Switch>
-            </Grid>
-            <Label Margin="5, 0, 5, 0" x:Name="Description" IsVisible="False" Text="If disabled, when entering a 9 hole score, the score will be doubled and added in as an 18 hole score. If enabled, 9 hole and 18 hole handicaps are kept separately." FontSize="Small"></Label>
-            
             <Grid Margin="5, 30, 5, 30">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>

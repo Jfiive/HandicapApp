@@ -31,23 +31,6 @@ namespace GolfHandicapApp
             }
         }
 
-        private void ImageButton_Clicked(object sender, EventArgs e)
-        {
-            if (Description.IsVisible)
-            {
-                Description.IsVisible = false;
-            }
-            else
-            {
-                Description.IsVisible = true;
-            }
-        }
-
-        private void SeparateHandicaps_Toggled(object sender, ToggledEventArgs e)
-        {
-            Preferences.Set("SeparateHandicaps", SeparateHandicaps.IsToggled);
-        }
-
         private void DisplayEUDate_Toggled(object sender, ToggledEventArgs e)
         {
             Preferences.Set("DisplayEUDate", DisplayEUDate.IsToggled);
