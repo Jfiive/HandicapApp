@@ -193,7 +193,7 @@ namespace GolfHandicapApp
                 score.RoundType = "18";
             }
             App.Database.SaveScore(score);
-            App.Database.CalculateHandicap();
+            App.Database.CalculateHandicap(score.RoundType);
             EighteenHoles.IsChecked = true;
 
             //Navigation.PushAsync(new MyScores());

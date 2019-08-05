@@ -18,7 +18,7 @@ namespace GolfHandicapApp
         public MyScores()
         {
             InitializeComponent();
-            scorelistdata = App.Database.GetPastScores();
+            scorelistdata = App.Database.GetPastScores("18");
             ScoreList.ItemsSource = scorelistdata;
 
             if (Preferences.ContainsKey("Handicap18"))
@@ -31,7 +31,8 @@ namespace GolfHandicapApp
                 HandicapLabel9.Text = "Handicap 9: ";
                 HandicapNumberLabel9.Text = Preferences.Get("Handicap9", -1.0).ToString();
             }
-            if (App.Database.GetNumberOfScores() < 5)
+            //This is 18 because by default the page is going to be in 18 handicap mode
+            if (App.Database.GetNumberOfScores("18") < 5)
             {
                 HandicapLabel.Text = "5+ scores are needed for a handicap.";
                 HandicapDisplay9.IsVisible = false;
@@ -67,7 +68,7 @@ namespace GolfHandicapApp
 
                 case 1: //delete score
                     App.Database.DeleteScore(selectedScore.ScoreID);
-                    scorelistdata = App.Database.GetPastScores();
+                    scorelistdata = App.Database.GetPastScores(GetSelectedDisplayMode());
                     ScoreList.ItemsSource = scorelistdata;
                     if (scorelistdata.Count < 5)
                     {
@@ -174,8 +175,8 @@ namespace GolfHandicapApp
             App.Database.UpdateScore(editingscore);
             EditScorePopup.IsVisible = false;
             ScoreList.SelectedItem = null;
-            App.Database.CalculateHandicap();
-            scorelistdata = App.Database.GetPastScores();
+            App.Database.CalculateHandicap(editingscore.RoundType);
+            scorelistdata = App.Database.GetPastScores(GetSelectedDisplayMode());
             ScoreList.ItemsSource = scorelistdata;
             if (Preferences.ContainsKey("Handicap18") && scorelistdata.Count >= 5)
             {
@@ -223,6 +224,43 @@ namespace GolfHandicapApp
             else
             {
                 HandicapDisplay9.IsVisible = false;
+            }
+        }
+
+        private void EighteenHoleMode_Toggled(object sender, ToggledEventArgs e)
+        {
+            if (NineHoleMode.IsToggled)
+            {
+                NineHoleMode.IsToggled = false;
+            }
+            if (EighteenHoleMode.IsToggled)
+            {
+                EighteenHoleMode.IsToggled = true;
+            }
+
+        }
+
+        private void NineHoleMode_Toggled(object sender, ToggledEventArgs e)
+        {
+            if (EighteenHoleMode.IsToggled)
+            {
+                EighteenHoleMode.IsToggled = false;
+            }
+            if (NineHoleMode.IsToggled)
+            {
+                NineHoleMode.IsToggled = true;
+            }
+        }
+
+        private string GetSelectedDisplayMode()
+        {
+            if (EighteenHoleMode.IsToggled)
+            {
+                return "18";
+            }
+            else
+            {
+                return "9";
             }
         }
     }

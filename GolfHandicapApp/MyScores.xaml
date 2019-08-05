@@ -135,6 +135,10 @@
         <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <StackLayout Orientation="Horizontal">
+                    <Label Text="Display 18 Handicap" HorizontalOptions="Start"></Label>
+                    <Switch x:Name="EighteenHoleMode" IsToggled="True" Toggled="EighteenHoleMode_Toggled" HorizontalOptions="Start"></Switch>
+                    <Switch x:Name="NineHoleMode" Toggled="NineHoleMode_Toggled" HorizontalOptions="End"></Switch>
+                    <Label HorizontalOptions="End" Text="Display 9 Handicap"></Label>
                     <Label x:Name="HandicapDisplay" FontSize="Large" HorizontalOptions="CenterAndExpand">
                         <Label.FormattedText>
                             <FormattedString>

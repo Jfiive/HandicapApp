@@ -39,6 +39,7 @@ namespace GolfHandicapApp
         public int HandicapID { get; set; }
         public DateTime Date { get; set; }
         public decimal Number { get; set; }
+        public string Type { get; set; }
     }
     public class DetailedScore
     {

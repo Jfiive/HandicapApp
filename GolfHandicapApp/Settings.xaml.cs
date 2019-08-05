@@ -17,10 +17,6 @@ namespace GolfHandicapApp
         {
             InitializeComponent();
             //switch all the switches to the saved settings
-            if (Preferences.ContainsKey("SeparateHandicaps"))
-            {
-                SeparateHandicaps.IsToggled = Preferences.Get("Separatehandicaps", false);
-            }
             if (Preferences.ContainsKey("DisplayEUDate"))
             {
                 DisplayEUDate.IsToggled = Preferences.Get("DisplayEUDate", false);
