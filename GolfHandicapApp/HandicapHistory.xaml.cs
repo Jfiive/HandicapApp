@@ -39,7 +39,8 @@ namespace GolfHandicapApp
             }
             else
             {
-                HandicapDisplayMode.IsToggled = false;
+                handicaplistdata = App.Database.GetHandicaps(9);
+                HandicapHistoryList.ItemsSource = handicaplistdata;
             }
         }
 

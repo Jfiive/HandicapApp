@@ -42,7 +42,6 @@ namespace GolfHandicapApp
                     }
                     HandicapNumberLabel.Text = Preferences.Get("Handicap9", -1.0).ToString();
                 }
-                Preferences.Set("HandicapDisplayType", 9);
             }
             //This is 18 because by default the page is going to be in 18 handicap mode
             if (scorelistdata.Count < 5)
