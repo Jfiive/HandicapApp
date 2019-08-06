@@ -33,8 +33,32 @@ namespace GolfHandicapApp
             {
                 HandicapHistoryList.ItemTemplate = (DataTemplate)Resources["USDate"];
             }
-            handicaplistdata = App.Database.GetHandicaps();
-            HandicapHistoryList.ItemsSource = handicaplistdata;
+            if (Preferences.Get("HandicapDisplayType", 18) == 18)
+            {
+                HandicapDisplayMode.IsToggled = true;
+            }
+            else
+            {
+                HandicapDisplayMode.IsToggled = false;
+            }
+        }
+
+        private void HandicapDisplayMode_Toggled(object sender, ToggledEventArgs e)
+        {
+            if (HandicapDisplayMode.IsToggled)
+            {
+                //18 hole handicap history
+                handicaplistdata = App.Database.GetHandicaps(18);
+                HandicapHistoryList.ItemsSource = handicaplistdata;
+                Preferences.Set("HandicapDisplayType", 18);
+            }
+            else
+            {
+                //9 hole handicap history
+                handicaplistdata = App.Database.GetHandicaps(9);
+                HandicapHistoryList.ItemsSource = handicaplistdata;
+                Preferences.Set("HandicapDisplayType", 9);
+            }
         }
     }
 }

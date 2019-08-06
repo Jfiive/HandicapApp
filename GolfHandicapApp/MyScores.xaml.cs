@@ -18,26 +18,37 @@ namespace GolfHandicapApp
         public MyScores()
         {
             InitializeComponent();
-            scorelistdata = App.Database.GetPastScores("18");
+            scorelistdata = App.Database.GetPastScores(Preferences.Get("HandicapDisplayType", 18).ToString());
             ScoreList.ItemsSource = scorelistdata;
 
-            if (Preferences.ContainsKey("Handicap18"))
+            if (Preferences.Get("HandicapDisplayType", 18) == 18)
             {
-                HandicapLabel.Text = "Handicap: ";
-                HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
+                HandicapDisplayMode.IsToggled = true;
             }
-            if (Preferences.ContainsKey("Handicap9"))
+            else
             {
-                HandicapLabel9.Text = "Handicap 9: ";
-                HandicapNumberLabel9.Text = Preferences.Get("Handicap9", -1.0).ToString();
+                scorelistdata = App.Database.GetPastScores("9");
+                ScoreList.ItemsSource = scorelistdata;
+                if (scorelistdata.Count < 5)
+                {
+                    HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                    HandicapNumberLabel.Text = "";
+                }
+                else
+                {
+                    if (HandicapLabel.Text != "Handicap: ")
+                    {
+                        HandicapLabel.Text = "Handicap: ";
+                    }
+                    HandicapNumberLabel.Text = Preferences.Get("Handicap9", -1.0).ToString();
+                }
+                Preferences.Set("HandicapDisplayType", 9);
             }
             //This is 18 because by default the page is going to be in 18 handicap mode
-            if (App.Database.GetNumberOfScores("18") < 5)
+            if (scorelistdata.Count < 5)
             {
                 HandicapLabel.Text = "5+ scores are needed for a handicap.";
-                HandicapDisplay9.IsVisible = false;
             }
-            SetDisplayInformation();
             SetDataType();
         }
 
@@ -153,53 +164,60 @@ namespace GolfHandicapApp
                 ScoreList.ItemTemplate = (DataTemplate)Resources["USDate"];
             }
         }
-        private void SetDisplayInformation()
-        {
-            if (Preferences.Get("SeparateHandicaps", false) == true)
-            {
-                HandicapDisplay.HorizontalOptions = LayoutOptions.Start;
-                HandicapDisplay9.IsVisible = true;
-            }
-            else
-            {
-                HandicapDisplay9.IsVisible = false;
-            }
-        }
-
-        private void EighteenHoleMode_Toggled(object sender, ToggledEventArgs e)
-        {
-            if (NineHoleMode.IsToggled)
-            {
-                NineHoleMode.IsToggled = false;
-            }
-            if (EighteenHoleMode.IsToggled)
-            {
-                EighteenHoleMode.IsToggled = true;
-            }
-
-        }
-
-        private void NineHoleMode_Toggled(object sender, ToggledEventArgs e)
-        {
-            if (EighteenHoleMode.IsToggled)
-            {
-                EighteenHoleMode.IsToggled = false;
-            }
-            if (NineHoleMode.IsToggled)
-            {
-                NineHoleMode.IsToggled = true;
-            }
-        }
 
         private string GetSelectedDisplayMode()
         {
-            if (EighteenHoleMode.IsToggled)
+            if (HandicapDisplayMode.IsToggled)
             {
                 return "18";
             }
             else
             {
                 return "9";
+            }
+        }
+
+        private void HandicapDisplayMode_Toggled(object sender, ToggledEventArgs e)
+        {
+            if (HandicapDisplayMode.IsToggled)
+            {
+                //display 18 hole handicap information
+                scorelistdata = App.Database.GetPastScores("18");
+                ScoreList.ItemsSource = scorelistdata;
+                if (scorelistdata.Count < 5)
+                {
+                    HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                    HandicapNumberLabel.Text = "";
+                }
+                else
+                {
+                    if (HandicapLabel.Text != "Handicap: ")
+                    {
+                        HandicapLabel.Text = "Handicap: ";
+                    }
+                    HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
+                }
+                Preferences.Set("HandicapDisplayType", 18);
+            }
+            else
+            {
+                //display 9 hole handicap information
+                scorelistdata = App.Database.GetPastScores("9");
+                ScoreList.ItemsSource = scorelistdata;
+                if (scorelistdata.Count < 5)
+                {
+                    HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                    HandicapNumberLabel.Text = "";
+                }
+                else
+                {
+                    if (HandicapLabel.Text != "Handicap: ")
+                    {
+                        HandicapLabel.Text = "Handicap: ";
+                    }
+                    HandicapNumberLabel.Text = Preferences.Get("Handicap9", -1.0).ToString();
+                }
+                Preferences.Set("HandicapDisplayType", 9);
             }
         }
     }

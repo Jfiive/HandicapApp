@@ -135,7 +135,7 @@
         <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <Label x:Name="HandicapDisplay" FontSize="Large" HorizontalOptions="CenterAndExpand">
+                    <Label x:Name="HandicapDisplay" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand">
                         <Label.FormattedText>
                             <FormattedString>
                                 <Span x:Name="HandicapLabel" Text="Handicap: "></Span>
@@ -143,20 +143,11 @@
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                    <Label x:Name="HandicapDisplay9" FontSize="Large" HorizontalOptions="End" IsVisible="False">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span x:Name="HandicapLabel9" Text="Handicap 9: "></Span>
-                                <Span x:Name="HandicapNumberLabel9" Text=""></Span>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="18 hole Handicap" HorizontalOptions="Start"></Label>
-                    <Switch x:Name="EighteenHoleMode" IsToggled="True" Toggled="EighteenHoleMode_Toggled" HorizontalOptions="Start"></Switch>
-                    <Switch x:Name="NineHoleMode" Toggled="NineHoleMode_Toggled" HorizontalOptions="EndAndExpand" Margin="85,0,0,0"></Switch>
-                    <Label HorizontalOptions="EndAndExpand" Text="9 Hole Handicap"></Label>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Label Text="9 hole Handicap"></Label>
+                    <Switch x:Name="HandicapDisplayMode" Toggled="HandicapDisplayMode_Toggled"></Switch>
+                    <Label Text="18 Hole Handicap"></Label>
                 </StackLayout>
                 <Grid BackgroundColor="#4d4dff">
                     <Grid.ColumnDefinitions>

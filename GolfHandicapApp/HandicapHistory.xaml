@@ -46,6 +46,11 @@
     <ContentPage.Content>
         <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Label Text="9 hole History"></Label>
+                    <Switch x:Name="HandicapDisplayMode" Toggled="HandicapDisplayMode_Toggled"></Switch>
+                    <Label Text="18 Hole History"></Label>
+                </StackLayout>
                 <Grid BackgroundColor="#4d4dff">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
@@ -55,7 +60,7 @@
                     <Label Grid.Column="1" TextColor="White" Text="Handicap" HorizontalOptions="FillAndExpand"></Label>
                 </Grid>
                 <ListView x:Name="HandicapHistoryList" ItemsSource="{Binding HandicapHistoryData}">
-                    
+
                 </ListView>
             </StackLayout>
         </AbsoluteLayout>

@@ -23,13 +23,25 @@ namespace GolfHandicapApp
         {
             return _database.Table<Course>().ToList();
         }
+        public void ResetDatabase()
+        {
+            _database.Execute("DELETE FROM Scores");
+            _database.Execute("DELETE FROM Handicap");
+        }
         public int SaveCourse(Course course)
         {
             return _database.Insert(course);
         }
-        public List<Handicap> GetHandicaps()
+        public List<Handicap> GetHandicaps(int RoundType)
         {
-            return _database.Table<Handicap>().OrderByDescending(o => o.Date).ToList();
+            if (RoundType == 18)
+            {
+                return _database.Table<Handicap>().Where(h => h.Type == "18").OrderByDescending(o => o.Date).ToList();
+            }
+            else
+            {
+                return _database.Table<Handicap>().Where(h => h.Type == "Front" || h.Type == "Back").OrderByDescending(o => o.Date).ToList();
+            }
         }
         public int SaveHandicap(Handicap handicap)
         {
@@ -158,10 +170,6 @@ namespace GolfHandicapApp
         public int DeleteScore(int ID)
         {
             return _database.Delete<Scores>(ID);
-        }
-        public void CalculateHandicap9()
-        {
-
         }
         public void CalculateHandicap(string RoundType)
         {

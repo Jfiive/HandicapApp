@@ -36,6 +36,10 @@ namespace GolfHandicapApp
             {
                 Preferences.Set("HighlightScores", false);
             }
+            if (!Preferences.ContainsKey("HandicapDisplayType"))
+            {
+                Preferences.Set("HandicapDisplayType", 18);
+            }
             MainPage = new MainPage();
         }
 

@@ -26,6 +26,7 @@ namespace GolfHandicapApp
                 EnterCoursePopup.IsVisible = true;
                 Title = "Add New Course";
             }
+            SelectedRoundType.SelectedIndex = 0;
         }
 
         private void AddCourseButton_Clicked(object sender, EventArgs e)
@@ -94,7 +95,7 @@ namespace GolfHandicapApp
             {
                 EnterScorePopup.IsVisible = false;
                 CourseList.SelectedItem = null;
-                SelectedRoundType.SelectedIndex = -1;
+                SelectedRoundType.SelectedIndex = 0;
                 EnteredScore.Text = null;
                 ScoreDate.Date = DateTime.Today;
             }
@@ -130,12 +131,20 @@ namespace GolfHandicapApp
             var selectedCourse = (Course)CourseList.SelectedItem;
             score.Score = int.Parse(EnteredScore.Text);
             score.Date = ScoreDate.Date;
-            score.Differential = Math.Round((score.Score - selectedCourse.Rating) * 113 / selectedCourse.Slope, 2);
-            score.CourseID = selectedCourse.CourseID;
             score.RoundType = SelectedRoundType.SelectedItem.ToString();
+            if (score.RoundType == "18")
+            {
+                score.Differential = Math.Round((score.Score - selectedCourse.Rating) * 113 / selectedCourse.Slope, 2);
+            }
+            else
+            {
+                //9 hole calculations only use half the course rating
+                score.Differential = Math.Round((score.Score - (selectedCourse.Rating / 2)) * 113 / selectedCourse.Slope, 2);
+            }
+            score.CourseID = selectedCourse.CourseID;
             App.Database.SaveScore(score);
             App.Database.CalculateHandicap(score.RoundType);
-            SelectedRoundType.SelectedIndex = -1;
+            SelectedRoundType.SelectedIndex = 0;
 
             //Navigation.PushAsync(new MyScores());
             ((App.Current.MainPage as MasterDetailPage).Detail as NavigationPage).Navigation.PushAsync(new MyScores());
