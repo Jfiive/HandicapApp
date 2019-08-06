@@ -54,15 +54,15 @@ namespace GolfHandicapApp
                     SelectedScoreDate.Date = selectedScore.Date;
                     if (selectedScore.RoundType == "Front")
                     {
-                        SelectedFrontNine.IsChecked = true;
+                        SelectedRoundType.SelectedIndex = 1;
                     }
                     else if (selectedScore.RoundType == "Back")
                     {
-                        SelectedBackNine.IsChecked = true;
+                        SelectedRoundType.SelectedIndex = 2;
                     }
                     else
                     {
-                        SelectedEighteenHoles.IsChecked = true;
+                        SelectedRoundType.SelectedIndex = 0;
                     }
                     break;
 
@@ -103,74 +103,13 @@ namespace GolfHandicapApp
             }
         }
 
-        private void FrontNine_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (SelectedEighteenHoles.IsChecked)
-            {
-                SelectedEighteenHoles.IsChecked = false;
-            }
-            if (SelectedBackNine.IsChecked)
-            {
-                SelectedBackNine.IsChecked = false;
-            }
-
-
-            if (SelectedFrontNine.IsChecked)
-            {
-                SelectedFrontNine.IsChecked = true;
-            }
-        }
-
-        private void EighteenHoles_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (SelectedFrontNine.IsChecked)
-            {
-                SelectedFrontNine.IsChecked = false;
-            }
-            if (SelectedBackNine.IsChecked)
-            {
-                SelectedBackNine.IsChecked = false;
-            }
-
-            if (SelectedEighteenHoles.IsChecked)
-            {
-                SelectedEighteenHoles.IsChecked = true;
-            }
-        }
-        private void BackNine_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (SelectedFrontNine.IsChecked)
-            {
-                SelectedFrontNine.IsChecked = false;
-            }
-            if (SelectedEighteenHoles.IsChecked)
-            {
-                SelectedEighteenHoles.IsChecked = false;
-            }
-
-            if (SelectedBackNine.IsChecked)
-            {
-                SelectedBackNine.IsChecked = true;
-            }
-        }
-
         private void EditScore_Clicked(object sender, EventArgs e)
         {
             var editingscore = App.Database.GetScore(((DetailedScore)ScoreList.SelectedItem).ScoreID);
             editingscore.Score = int.Parse(SelectedScore.Text);
             editingscore.Date = SelectedScoreDate.Date;
-            if (SelectedFrontNine.IsChecked)
-            {
-                editingscore.RoundType = "Front";
-            }
-            else if (SelectedBackNine.IsChecked)
-            {
-                editingscore.RoundType = "Back";
-            }
-            else
-            {
-                editingscore.RoundType = "18";
-            }
+
+            editingscore.RoundType = SelectedRoundType.SelectedItem.ToString();
 
             App.Database.UpdateScore(editingscore);
             EditScorePopup.IsVisible = false;

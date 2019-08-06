@@ -83,57 +83,6 @@ namespace GolfHandicapApp
             CourseClickMenu.IsVisible = true;
         }
 
-        private void FrontNine_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (EighteenHoles.IsChecked)
-            {
-                EighteenHoles.IsChecked = false;
-            }
-            if (BackNine.IsChecked)
-            {
-                BackNine.IsChecked = false;
-            }
-
-
-            if (FrontNine.IsChecked)
-            {
-                FrontNine.IsChecked = true;
-            }
-        }
-
-        private void EighteenHoles_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (FrontNine.IsChecked)
-            {
-                FrontNine.IsChecked = false;
-            }
-            if (BackNine.IsChecked)
-            {
-                BackNine.IsChecked = false;
-            }
-
-            if (EighteenHoles.IsChecked)
-            {
-                EighteenHoles.IsChecked = true;
-            }
-        }
-        private void BackNine_CheckedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (FrontNine.IsChecked)
-            {
-                FrontNine.IsChecked = false;
-            }
-            if (EighteenHoles.IsChecked)
-            {
-                EighteenHoles.IsChecked = false;
-            }
-
-            if (BackNine.IsChecked)
-            {
-                BackNine.IsChecked = true;
-            }
-        }
-
         private void ClosePopup(object sender, EventArgs e)
         {
             var button = (ImageButton)sender;
@@ -145,6 +94,9 @@ namespace GolfHandicapApp
             {
                 EnterScorePopup.IsVisible = false;
                 CourseList.SelectedItem = null;
+                SelectedRoundType.SelectedIndex = -1;
+                EnteredScore.Text = null;
+                ScoreDate.Date = DateTime.Today;
             }
             else if (button.ClassId == "CloseCourseClickMenu")
             {
@@ -180,21 +132,10 @@ namespace GolfHandicapApp
             score.Date = ScoreDate.Date;
             score.Differential = Math.Round((score.Score - selectedCourse.Rating) * 113 / selectedCourse.Slope, 2);
             score.CourseID = selectedCourse.CourseID;
-            if (FrontNine.IsChecked)
-            {
-                score.RoundType = "Front";
-            }
-            else if (BackNine.IsChecked)
-            {
-                score.RoundType = "Back";
-            }
-            else
-            {
-                score.RoundType = "18";
-            }
+            score.RoundType = SelectedRoundType.SelectedItem.ToString();
             App.Database.SaveScore(score);
             App.Database.CalculateHandicap(score.RoundType);
-            EighteenHoles.IsChecked = true;
+            SelectedRoundType.SelectedIndex = -1;
 
             //Navigation.PushAsync(new MyScores());
             ((App.Current.MainPage as MasterDetailPage).Detail as NavigationPage).Navigation.PushAsync(new MyScores());
