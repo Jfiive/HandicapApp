@@ -58,6 +58,17 @@ namespace GolfHandicapApp
                 return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, Course.Rating, Course.Slope, Course.Tee FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID WHERE Scores.RoundType = 'Front' OR Scores.RoundType = 'Back' ORDER BY Scores.Date DESC");
             }
         }
+        public DateTime GetLastEnteredScoreDate(string RoundType)
+        {
+            if (RoundType == "18")
+            {
+                return _database.Table<Scores>().Where(s => s.RoundType == "18").OrderByDescending(s => s.Date).First().Date;
+            }
+            else
+            {
+                return _database.Table<Scores>().Where(s => s.RoundType == "Front" || s.RoundType == "Back").OrderByDescending(s => s.Date).First().Date;
+            }
+        }
         public void UpdateLowestScoreFlags(int Number, string RoundType)
         {
             if (RoundType == "18")
@@ -194,7 +205,7 @@ namespace GolfHandicapApp
                     {
                         var hdcp = new Handicap
                         {
-                            Date = DateTime.Today,
+                            Date = GetLastEnteredScoreDate(RoundType),
                             Number = handicap,
                             Type = RoundType
                         };
@@ -207,7 +218,7 @@ namespace GolfHandicapApp
                     //this is the first time the user has gotten 5 scores to get a handicap calculated so insert the handicap as the first history
                     var hdcp = new Handicap
                     {
-                        Date = DateTime.Today,
+                        Date = GetLastEnteredScoreDate(RoundType),
                         Number = handicap,
                         Type = RoundType
                     };
@@ -223,7 +234,7 @@ namespace GolfHandicapApp
                     {
                         var hdcp = new Handicap
                         {
-                            Date = DateTime.Today,
+                            Date = GetLastEnteredScoreDate(RoundType),
                             Number = handicap,
                             Type = RoundType
                         };
@@ -236,7 +247,7 @@ namespace GolfHandicapApp
                     //first time a user has gotten 5 scores to get a handicap
                     var hdcp = new Handicap
                     {
-                        Date = DateTime.Today,
+                        Date = GetLastEnteredScoreDate(RoundType),
                         Number = handicap,
                         Type = RoundType
                     };
