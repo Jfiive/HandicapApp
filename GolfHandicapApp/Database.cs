@@ -17,18 +17,54 @@ namespace GolfHandicapApp
             _database.CreateTable<Course>();
             _database.CreateTable<Scores>();
             _database.CreateTable<Handicap>();
+            _database.CreateTable<PlayedCourse>();
+            _database.CreateTable<TeeInfo>();
         }
         //general database actions
-        public List<Course> GetCourses()
+        public List<Course> GetCoursesByState(string State)
         {
-            return _database.Table<Course>().ToList();
+            return _database.Table<Course>().Where(c => c.State == State).ToList();
+        }
+        
+        public List<DisplayCourse> GetPlayedCourses()
+        {
+            return _database.Query<DisplayCourse>("SELECT PlayedCourse.PlayedID, Course.Name, TeeInfo.TeeName, TeeInfo.Rating, TeeInfo.Slope FROM PlayedCourse LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN TeeInfo ON PlayedCourse.InfoID = TeeInfo.InfoID");
+        }
+        public TeeInfo GetTeeInfo(int PlayedID)
+        {
+            return _database.Query<TeeInfo>("SELECT * FROM TeeInfo WHERE InfoID = (SELECT InfoID FROM PlayedCourse WHERE PlayedID = " + PlayedID + ")").First();
+        }
+        public List<Course> SearchCourses(string Criteria)
+        {
+            return _database.Query<Course>("SELECT * FROM Course WHERE Name LIKE '%" + Criteria + "%'");
+        }
+        public List<PickerTee> GetCourseTees(int CourseID)
+        {
+            var tees = _database.Table<TeeInfo>().Where(t => t.CourseID == CourseID).ToList();
+            var output = new List<PickerTee>();
+            foreach (var item in tees)
+            {
+                var tee = new PickerTee()
+                {
+                    InfoID = item.InfoID,
+                    CourseID = item.CourseID,
+                    TeeName = item.TeeName,
+                    Rating = item.Rating,
+                    Slope = item.Slope,
+                    FrontRating = item.FrontRating,
+                    BackRating = item.BackRating,
+                    DisplayName = item.TeeName + " (" + item.Gender + ")"
+                };
+                output.Add(tee);
+            }
+            return output;
         }
         public void ResetDatabase()
         {
             _database.Execute("DELETE FROM Scores");
             _database.Execute("DELETE FROM Handicap");
         }
-        public int SaveCourse(Course course)
+        public int SaveCourse(PlayedCourse course)
         {
             return _database.Insert(course);
         }
@@ -49,13 +85,14 @@ namespace GolfHandicapApp
         }
         public List<DetailedScore> GetPastScores(string RoundType)
         {
+            //need to change the query so it gets the course name since the courseID got replace with a playedID
             if (RoundType == "18")
             {
-                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, Course.Rating, Course.Slope, Course.Tee FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID WHERE Scores.RoundType = '18' ORDER BY Scores.Date DESC");
+                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID WHERE Scores.RoundType = '18' ORDER BY Scores.Date DESC");
             }
             else
             {
-                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, Course.Rating, Course.Slope, Course.Tee FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID WHERE Scores.RoundType = 'Front' OR Scores.RoundType = 'Back' ORDER BY Scores.Date DESC");
+                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID WHERE Scores.RoundType = 'Front' OR Scores.RoundType = 'Back' ORDER BY Scores.Date DESC");
             }
         }
         public DateTime GetLastEnteredScoreDate(string RoundType)
@@ -130,7 +167,7 @@ namespace GolfHandicapApp
         {
             return _database.Table<Scores>().FirstOrDefault(o => o.ScoreID == ID);
         }
-        public decimal GetCurrentHandicap()
+        public double GetCurrentHandicap()
         {
             return _database.Table<Handicap>().OrderByDescending(o => o.Date).FirstOrDefault().Number;
         }
@@ -149,7 +186,7 @@ namespace GolfHandicapApp
         {
             return _database.Table<Scores>().OrderBy(o => o.Score).Take(Number).ToList();
         }
-        public List<decimal> GetLowestScoresDifferentials(int Number, string RoundType)
+        public List<double> GetLowestScoresDifferentials(int Number, string RoundType)
         {
             var scorelist = new List<Scores>();
             if (RoundType == "18")
@@ -176,7 +213,7 @@ namespace GolfHandicapApp
         }
         public int DeleteCourse(int ID)
         {
-            return _database.Delete<Course>(ID);
+            return _database.Delete<PlayedCourse>(ID);
         }
         public int DeleteScore(int ID)
         {
@@ -193,9 +230,9 @@ namespace GolfHandicapApp
             var ScoresToUse = GetNumberOfScoresToUse(ScoreCount);
             var LowestScores = GetLowestScoresDifferentials(ScoresToUse, RoundType);
             UpdateLowestScoreFlags(ScoresToUse, RoundType);
-            var handicap = LowestScores.Average() * 0.96m;
+            var handicap = LowestScores.Average() * 0.96;
             //eventually make every decimal in the database to be a double since the handicap has to be a double and itll make things a lot easier
-            handicap = Convert.ToDecimal(handicap.ToString("0.#"));
+            handicap = Convert.ToDouble(handicap.ToString("0.#"));
             if (RoundType == "18")
             {
                 if (Preferences.ContainsKey("Handicap18"))
@@ -211,7 +248,7 @@ namespace GolfHandicapApp
                         };
                         SaveHandicap(hdcp);
                     }
-                    Preferences.Set("Handicap18", Convert.ToDouble(handicap));
+                    Preferences.Set("Handicap18", handicap);
                 }
                 else
                 {
@@ -222,7 +259,7 @@ namespace GolfHandicapApp
                         Number = handicap,
                         Type = RoundType
                     };
-                    Preferences.Set("Handicap18", Convert.ToDouble(handicap));
+                    Preferences.Set("Handicap18", handicap);
                     SaveHandicap(hdcp);
                 }
             }
@@ -238,7 +275,7 @@ namespace GolfHandicapApp
                             Number = handicap,
                             Type = RoundType
                         };
-                        Preferences.Set("Handicap9", Convert.ToDouble(handicap));
+                        Preferences.Set("Handicap9", handicap);
                         SaveHandicap(hdcp);
                     }
                 }
@@ -251,7 +288,7 @@ namespace GolfHandicapApp
                         Number = handicap,
                         Type = RoundType
                     };
-                    Preferences.Set("Handicap9", Convert.ToDouble(handicap));
+                    Preferences.Set("Handicap9", handicap);
                     SaveHandicap(hdcp);
                 }
             }

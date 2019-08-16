@@ -9,8 +9,6 @@ namespace GolfHandicapApp
 {
     public partial class App : Application
     {
-        //possibly use Application.Current.Properties ( Application.Current.Properties["Scores"] as an example ) instead of a database like this
-        //would need to call Application.Current.SavePropertiesAsync() after changing something so it would be saved immediately otherwise it wont be saved until the application gets closed out or goes to sleep mode
         static Database database;
 
         public static Database Database
@@ -19,8 +17,15 @@ namespace GolfHandicapApp
             {
                 if (database == null)
                 {
-                    //this is for android the connection string needs to be different for iOS but that will come at some other time
-                    database = new Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "HandicapDB.db3"));
+                    if (Device.RuntimePlatform == Device.Android)
+                    {
+                        database = new Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "HandicapDB.db"));
+                    }
+                    else if (Device.RuntimePlatform == Device.iOS)
+                    {
+                        string libFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "..", "Library", "Databases");
+                        database = new Database(Path.Combine(libFolder, "HandicapDB.db"));
+                    }
                 }
                 return database;
             }

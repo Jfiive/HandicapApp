@@ -67,11 +67,13 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="FileAccessHelper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <BundleResource Include="Resources\HandicapDB.db" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\LaunchImages.launchimage\Contents.json">
@@ -130,6 +132,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="dotMorten.Xamarin.Forms.AutoSuggestBox">
+      <Version>0.7.0</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.618606" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
   </ItemGroup>

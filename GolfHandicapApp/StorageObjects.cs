@@ -17,9 +17,29 @@ namespace GolfHandicapApp
         [PrimaryKey, AutoIncrement]
         public int CourseID { get; set; }
         public string Name { get; set; }
-        public string Tee { get; set; }
-        public decimal Rating { get; set; }
-        public decimal Slope { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+    }
+    public class PlayedCourse
+    {
+        [PrimaryKey, AutoIncrement]
+        public int PlayedID { get; set; }
+        public int CourseID { get; set; }
+        public int InfoID { get; set; }
+    }
+    public class TeeInfo
+    {
+        [PrimaryKey, AutoIncrement]
+        public int InfoID { get; set; }
+        public int CourseID { get; set; }
+        public string TeeName { get; set; }
+        public double Rating { get; set; }
+        public int Slope { get; set; }
+        public double FrontRating { get; set; }
+        public int FrontSlope { get; set; }
+        public double BackRating { get; set; }
+        public int BackSlope { get; set; }
+        public string Gender { get; set; }
     }
     
     public class Scores
@@ -28,9 +48,9 @@ namespace GolfHandicapApp
         public int ScoreID { get; set; }
         public DateTime Date { get; set; }
         public int Score { get; set; }
-        public decimal Differential { get; set; }
+        public double Differential { get; set; }
         public string RoundType { get; set; }
-        public int CourseID { get; set; }
+        public int PlayedID { get; set; }
         public bool UsedForCalc { get; set; }
     }
     public class Handicap
@@ -38,7 +58,7 @@ namespace GolfHandicapApp
         [PrimaryKey, AutoIncrement]
         public int HandicapID { get; set; }
         public DateTime Date { get; set; }
-        public decimal Number { get; set; }
+        public double Number { get; set; }
         public string Type { get; set; }
     }
     public class DetailedScore
@@ -47,12 +67,29 @@ namespace GolfHandicapApp
         public int ScoreID { get; set; }
         public DateTime Date { get; set; }
         public int Score { get; set; }
-        public decimal Differential { get; set; }
+        public double Differential { get; set; }
         public string RoundType { get; set; }
         public bool UsedForCalc { get; set; }
         public string Name { get; set; }
-        public decimal Rating { get; set; }
-        public decimal Slope { get; set; }
-        public string Tee { get; set; }
+    }
+    public class PickerTee
+    {
+        public int InfoID { get; set; }
+        public int CourseID { get; set; }
+        public string TeeName { get; set; }
+        public double Rating { get; set; }
+        public int Slope { get; set; }
+        public double FrontRating { get; set; }
+        public double BackRating { get; set; }
+        public string DisplayName { get; set; }
+    }
+    public class DisplayCourse
+    {
+        public int PlayedID { get; set; }
+        public int CourseID { get; set; }
+        public string Name { get; set; }
+        public string TeeName { get; set; }
+        public double Rating { get; set; }
+        public int Slope { get; set; }
     }
 }
