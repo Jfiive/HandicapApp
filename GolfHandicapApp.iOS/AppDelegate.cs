@@ -23,6 +23,7 @@ namespace GolfHandicapApp.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            FileAccessHelper.CopyDatabaseIfNotExists();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
