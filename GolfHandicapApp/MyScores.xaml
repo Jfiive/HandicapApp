@@ -174,7 +174,7 @@
                     <Label Grid.Column="3" TextColor="White" Text="Type" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
                     <Label Grid.Column="4" TextColor="White" Text="Diff" HorizontalOptions="FillAndExpand" VerticalTextAlignment="End"></Label>
                 </Grid>
-                <ListView x:Name="ScoreList" ItemsSource="{Binding ScoreListData}" ItemTapped="ScoreList_ItemTapped" RowHeight="50">
+                <ListView x:Name="ScoreList" ItemsSource="{Binding ScoreListData}" ItemTapped="ScoreList_ItemTapped" HasUnevenRows="True">
                     
                 </ListView>
             </StackLayout>
