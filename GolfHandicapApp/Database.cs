@@ -85,14 +85,13 @@ namespace GolfHandicapApp
         }
         public List<DetailedScore> GetPastScores(string RoundType)
         {
-            //need to change the query so it gets the course name since the courseID got replace with a playedID
             if (RoundType == "18")
             {
-                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID WHERE Scores.RoundType = '18' ORDER BY Scores.Date DESC");
+                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, TeeInfo.TeeName FROM Scores LEFT JOIN PlayedCourse ON Scores.PlayedID = PlayedCourse.PlayedID LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN TeeInfo ON PlayedCourse.InfoID = TeeInfo.InfoID WHERE Scores.RoundType = '18' ORDER BY Scores.Date DESC");
             }
             else
             {
-                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name FROM Scores LEFT JOIN Course ON Scores.CourseID = Course.CourseID WHERE Scores.RoundType = 'Front' OR Scores.RoundType = 'Back' ORDER BY Scores.Date DESC");
+                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, TeeInfo.TeeName FROM Scores LEFT JOIN PlayedCourse ON Scores.PlayedID = PlayedCourse.PlayedID LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN TeeInfo ON PlayedCourse.InfoID = TeeInfo.InfoID WHERE Scores.RoundType = 'Front' OR Scores.RoundType = 'Back' ORDER BY Scores.Date DESC");
             }
         }
         public DateTime GetLastEnteredScoreDate(string RoundType)
