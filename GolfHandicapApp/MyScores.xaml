@@ -20,9 +20,10 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Margin="0, 0, 5, 0">
                             <Label.FormattedText>
@@ -33,9 +34,10 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Label Grid.Column="1" Text="{Binding Score}"></Label>
-                        <Label Grid.Column="2" Text="{Binding RoundType}"></Label>
-                        <Label Grid.Column="3" Text="{Binding Differential}"></Label>
+                        <Label Grid.Column="1" Text="{Binding TeeName}"></Label>
+                        <Label Grid.Column="2" Text="{Binding Score}"></Label>
+                        <Label Grid.Column="3" Text="{Binding RoundType}"></Label>
+                        <Label Grid.Column="4" Text="{Binding Differential}"></Label>
                     </Grid>
                 </StackLayout>
             </ViewCell>
@@ -46,9 +48,10 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Margin="0, 0, 5, 0">
                             <Label.FormattedText>
@@ -59,9 +62,10 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Label Grid.Column="1" Text="{Binding Score}"></Label>
-                        <Label Grid.Column="2" Text="{Binding RoundType}"></Label>
-                        <Label Grid.Column="3" Text="{Binding Differential}"></Label>
+                        <Label Grid.Column="1" Text="{Binding TeeName}"></Label>
+                        <Label Grid.Column="2" Text="{Binding Score}"></Label>
+                        <Label Grid.Column="3" Text="{Binding RoundType}"></Label>
+                        <Label Grid.Column="4" Text="{Binding Differential}"></Label>
                     </Grid>
                 </StackLayout>
             </ViewCell>
@@ -78,9 +82,10 @@
                         </Grid.Triggers>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Margin="0, 0, 5, 0">
                             <Label.FormattedText>
@@ -91,9 +96,10 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Label Grid.Column="1" Text="{Binding Score}"></Label>
-                        <Label Grid.Column="2" Text="{Binding RoundType}"></Label>
-                        <Label Grid.Column="3" Text="{Binding Differential}"></Label>
+                        <Label Grid.Column="1" Text="{Binding TeeName}"></Label>
+                        <Label Grid.Column="2" Text="{Binding Score}"></Label>
+                        <Label Grid.Column="3" Text="{Binding RoundType}"></Label>
+                        <Label Grid.Column="4" Text="{Binding Differential}"></Label>
                     </Grid>
                 </StackLayout>
             </ViewCell>
@@ -109,9 +115,10 @@
                         </Grid.Triggers>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
-                            <ColumnDefinition Width="60"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
+                            <ColumnDefinition Width="45"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Margin="0, 0, 5, 0">
                             <Label.FormattedText>
@@ -122,9 +129,10 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <Label Grid.Column="1" Text="{Binding Score}"></Label>
-                        <Label Grid.Column="2" Text="{Binding RoundType}"></Label>
-                        <Label Grid.Column="3" Text="{Binding Differential}"></Label>
+                        <Label Grid.Column="1" Text="{Binding TeeName}"></Label>
+                        <Label Grid.Column="2" Text="{Binding Score}"></Label>
+                        <Label Grid.Column="3" Text="{Binding RoundType}"></Label>
+                        <Label Grid.Column="4" Text="{Binding Differential}"></Label>
                     </Grid>
                 </StackLayout>
             </ViewCell>
@@ -152,19 +160,21 @@
                 <Grid BackgroundColor="#4d4dff">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
+                        <ColumnDefinition Width="45"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" TextColor="White" Text="Date" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start" Margin="0, 0, 5, 0"></Label>
-                    <Label Grid.Column="1" TextColor="White" Text="Score" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
-                    <Label Grid.Column="2" TextColor="White" Text="Type" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
-                    <Label Grid.Column="3" TextColor="White" Text="Diff" HorizontalOptions="FillAndExpand" VerticalTextAlignment="End"></Label>
+                    <Label Grid.Column="0" TextColor="White" Text="Course" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start" Margin="0, 0, 5, 0"></Label>
+                    <Label Grid.Column="1" TextColor="White" Text="Tee" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Column="2" TextColor="White" Text="Score" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Column="3" TextColor="White" Text="Type" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
+                    <Label Grid.Column="4" TextColor="White" Text="Diff" HorizontalOptions="FillAndExpand" VerticalTextAlignment="End"></Label>
                 </Grid>
-                <ListView x:Name="ScoreList" ItemsSource="{Binding ScoreListData}" ItemTapped="ScoreList_ItemTapped">
+                <ListView x:Name="ScoreList" ItemsSource="{Binding ScoreListData}" ItemTapped="ScoreList_ItemTapped" RowHeight="50">
                     
                 </ListView>
             </StackLayout>

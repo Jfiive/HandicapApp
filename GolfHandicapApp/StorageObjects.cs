@@ -71,6 +71,7 @@ namespace GolfHandicapApp
         public string RoundType { get; set; }
         public bool UsedForCalc { get; set; }
         public string Name { get; set; }
+        public string TeeName { get; set; }
     }
     public class PickerTee
     {
