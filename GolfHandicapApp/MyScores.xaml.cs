@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
+using Rg.Plugins.Popup.Services;
 
 namespace GolfHandicapApp
 {
@@ -95,7 +96,12 @@ namespace GolfHandicapApp
 
         private void ScoreList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            ScoreClickPopup.IsVisible = true;
+            //ScoreClickPopup.IsVisible = true;
+            PopupNavigation.Instance.PushAsync(new ScoreClick(this, (DetailedScore)ScoreList.SelectedItem));
+        }
+        public void ScoreListMenuClose()
+        {
+            ScoreList.SelectedItem = null;
         }
 
         private void ClosePopup(object sender, EventArgs e)
@@ -110,6 +116,17 @@ namespace GolfHandicapApp
             {
                 EditScorePopup.IsVisible = false;
                 ScoreList.SelectedItem = null;
+            }
+        }
+        public void RefreshScoreList()
+        {
+            scorelistdata = App.Database.GetPastScores(GetSelectedDisplayMode());
+            ScoreList.ItemsSource = scorelistdata;
+            //do the same with 9 hole handicap as well
+            if (Preferences.ContainsKey("Handicap18") && scorelistdata.Count >= 5)
+            {
+                HandicapLabel.Text = "Handicap: ";
+                HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
             }
         }
 

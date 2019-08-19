@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             mc:Ignorable="d"
+             x:Class="GolfHandicapApp.ScoreClick">
+    <StackLayout Margin="12" Spacing="24" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" HeightRequest="100">
+        <ListView x:Name="ScoreClickMenu"  ItemSelected="ScoreClickMenu_ItemSelected">
+            <ListView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Edit Score</x:String>
+                    <x:String>Delete Score</x:String>
+                </x:Array>
+            </ListView.ItemsSource>
+        </ListView>
+    </StackLayout>
+</pages:PopupPage>
