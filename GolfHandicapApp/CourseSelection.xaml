@@ -30,7 +30,7 @@
                     <Label Grid.Column="2" TextColor="White" Text="Rating" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
                     <Label Grid.Column="3" TextColor="White" Text="Slope" HorizontalOptions="FillAndExpand" VerticalTextAlignment="End"></Label>
                 </Grid>
-                <ListView x:Name="CourseList" ItemsSource="{Binding MyCourses}" ItemTapped="CourseList_ItemTapped">
+                <ListView x:Name="CourseList" ItemsSource="{Binding MyCourses}" ItemTapped="CourseList_ItemTapped" RowHeight="55">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
