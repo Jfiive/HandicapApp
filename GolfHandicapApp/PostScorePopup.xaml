@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             mc:Ignorable="d"
+             x:Class="GolfHandicapApp.PostScorePopup">
+    <StackLayout Margin="12" Spacing="24" Padding="10" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="380" WidthRequest="260" BackgroundColor="White">
+        <Entry x:Name="EnteredScore" Margin="20, 0, 20, 0" Keyboard="Numeric" Placeholder="Score"></Entry>
+        <Label Text="Date: " Margin="20, 0, 0, 0"></Label>
+        <DatePicker Margin="20, 0, 20, 0" x:Name="ScoreDate"></DatePicker>
+        <Label Text="Round Type: " Margin="20, 0, 0, 0"></Label>
+        <Picker x:Name="SelectedRoundType" Title="Select Round Type" Margin="20, 0, 20, 0">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>18</x:String>
+                    <x:String>Front</x:String>
+                    <x:String>Back</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <Button x:Name="PostScore" Text="Post Score" Margin="20, 20, 20, 0" HorizontalOptions="Center" Clicked="PostScore_Clicked"></Button>
+    </StackLayout>
+</pages:PopupPage>

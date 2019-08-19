@@ -31,7 +31,7 @@ namespace GolfHandicapApp
             switch (e.SelectedItemIndex)
             {
                 case 0: //edit score
-                    PopupNavigation.Instance.PushAsync(new EditScorePopup(mp, selectedScore));
+                    PopupNavigation.Instance.PushAsync(new EditScorePopup(mp, selectedScore, this));
                     break;
 
                 case 1: //delete score
@@ -40,6 +40,10 @@ namespace GolfHandicapApp
                     PopupNavigation.Instance.PopAsync();
                     break;
             }
+        }
+        public void ClearSelectedItem()
+        {
+            ScoreClickMenu.SelectedItem = null;
         }
     }
 }

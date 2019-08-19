@@ -13,7 +13,7 @@
         </OnPlatform>
     </ContentPage.Padding>
     <ContentPage.Content>
-        <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout>
                 <Grid BackgroundColor="#4d4dff">
                     <Grid.ColumnDefinitions>
@@ -22,6 +22,9 @@
                         <ColumnDefinition Width="60"></ColumnDefinition>
                         <ColumnDefinition Width="60"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
                     <Label Grid.Column="0" TextColor="White" Text="Course" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start"></Label>
                     <Label Grid.Column="1" TextColor="White" Text="Tee" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
                     <Label Grid.Column="2" TextColor="White" Text="Rating" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
@@ -50,68 +53,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-            <ContentView x:Name="EnterCoursePopup" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="False" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <StackLayout Orientation="Vertical" HeightRequest="275" WidthRequest="300" BackgroundColor="White">
-                        <ImageButton ClassId="CloseEnterCourse" Source="CloseButton.png" HeightRequest="20" HorizontalOptions="End" Margin="0, 5, 5, 0" Clicked="ClosePopup" BackgroundColor="White"></ImageButton>
-                        <Picker x:Name="StatePicker" Title="Pick a State" Margin="20, 0, 20, 0" SelectedIndexChanged="StatePicker_SelectedIndexChanged">
-                            <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>MA</x:String>
-                                    <x:String>ME</x:String>
-                                    <x:String>NH</x:String>
-                                    <x:String>VT</x:String>
-                                    <x:String>CT</x:String>
-                                    <x:String>RI</x:String>
-                                </x:Array>
-                            </Picker.ItemsSource>
-                        </Picker>
-                        <box:AutoSuggestBox x:Name="AutoComplete" PlaceholderText="Course Name" IsEnabled="False" SuggestionChosen="AutoComplete_SuggestionChosen" TextChanged="AutoComplete_TextChanged" DisplayMemberPath="Name" TextMemberPath="Name" Margin="20, 0, 20, 0">
-                            
-                        </box:AutoSuggestBox>
-                        <Picker x:Name="TeePicker" Title="Pick a Tee" Margin="20, 0, 20, 0" IsEnabled="False">
-
-                        </Picker>
-                        <Button x:Name="AddCourseButton" Margin="20, 20, 20, 0" Text="Add Course" Clicked="AddCourseButton_Clicked"></Button>
-                    </StackLayout>
-                </StackLayout>
-            </ContentView>
-            <ContentView x:Name="EnterScorePopup" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="False" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <StackLayout Orientation="Vertical" HeightRequest="303" WidthRequest="300" BackgroundColor="White">
-                        <ImageButton ClassId="CloseEnterScore" Source="CloseButton.png" HeightRequest="20" HorizontalOptions="End" Margin="0, 5, 5, 0" Clicked="ClosePopup" BackgroundColor="White"></ImageButton>
-                        <Entry x:Name="EnteredScore" Margin="20, 0, 20, 0" Keyboard="Numeric" Placeholder="Score"></Entry>
-                        <Label Text="Date: " Margin="20, 0, 20, 0"></Label><DatePicker Margin="20, 0, 20, 0" x:Name="ScoreDate"></DatePicker>
-                        <Label Text="Round Type: " Margin="20, 0, 20, 0"></Label>
-                        <Picker x:Name="SelectedRoundType" Title="Select Round Type" Margin="20, 0, 20, 0">
-                          <Picker.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                              <x:String>18</x:String>
-                              <x:String>Front</x:String>
-                              <x:String>Back</x:String>
-                            </x:Array>
-                          </Picker.ItemsSource>
-                        </Picker>
-                        <Button x:Name="PostScore" Text="Post Score" Margin="20, 20, 20, 0" HorizontalOptions="Center" Clicked="PostScore_Clicked"></Button>
-                    </StackLayout>
-                </StackLayout>
-            </ContentView>
-            <ContentView x:Name="CourseClickMenu" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="False" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <StackLayout Orientation="Vertical" HeightRequest="125" WidthRequest="300" BackgroundColor="White">
-                        <ImageButton ClassId="CloseCourseClickMenu" Source="CloseButton.png" HeightRequest="20" HorizontalOptions="End" Margin="0, 5, 5, 0" Clicked="ClosePopup" BackgroundColor="White"></ImageButton>
-                        <ListView x:Name="CourseSelectMenu" ItemSelected="CourseSelectMenu_ItemSelected">
-                            <ListView.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>Post a Score</x:String>
-                                    <x:String>Delete Course</x:String>
-                                </x:Array>
-                            </ListView.ItemsSource>
-                        </ListView>
-                    </StackLayout>
-                </StackLayout>
-            </ContentView>
-        </AbsoluteLayout>
+        </StackLayout>
     </ContentPage.Content>
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="AddNewCourse" IconImageSource="AddButtonWhite.png" Clicked="OpenPopup_Clicked"></ToolbarItem>

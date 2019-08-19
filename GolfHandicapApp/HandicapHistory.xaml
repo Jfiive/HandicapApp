@@ -44,25 +44,26 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <AbsoluteLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                    <Label Text="9 hole History"></Label>
-                    <Switch x:Name="HandicapDisplayMode" Toggled="HandicapDisplayMode_Toggled"></Switch>
-                    <Label Text="18 Hole History"></Label>
-                </StackLayout>
-                <Grid BackgroundColor="#4d4dff">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" TextColor="White" Text="Date" HorizontalOptions="FillAndExpand"></Label>
-                    <Label Grid.Column="1" TextColor="White" Text="Handicap" HorizontalOptions="FillAndExpand"></Label>
-                </Grid>
-                <ListView x:Name="HandicapHistoryList" ItemsSource="{Binding HandicapHistoryData}">
-
-                </ListView>
+        <StackLayout Padding="0" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Label Text="9 hole History"></Label>
+                <Switch x:Name="HandicapDisplayMode" Toggled="HandicapDisplayMode_Toggled"></Switch>
+                <Label Text="18 Hole History"></Label>
             </StackLayout>
-        </AbsoluteLayout>
+            <Grid BackgroundColor="#4d4dff">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0" TextColor="White" Text="Date" HorizontalOptions="FillAndExpand"></Label>
+                <Label Grid.Column="1" TextColor="White" Text="Handicap" HorizontalOptions="FillAndExpand"></Label>
+            </Grid>
+            <ListView x:Name="HandicapHistoryList" ItemsSource="{Binding HandicapHistoryData}" SelectionMode="None">
+
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

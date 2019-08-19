@@ -15,11 +15,13 @@ namespace GolfHandicapApp
     {
         public MyScores mp;
         public DetailedScore OriginalScore;
-        public EditScorePopup(MyScores m, DetailedScore Score)
+        public ScoreClick ScoreClick;
+        public EditScorePopup(MyScores m, DetailedScore Score, ScoreClick PrevPage)
         {
             InitializeComponent();
             mp = m;
             OriginalScore = Score;
+            ScoreClick = PrevPage;
             SelectedScore.Text = Score.Score.ToString();
             SelectedScoreDate.Date = Score.Date;
             if (Score.RoundType == "Front")
@@ -35,6 +37,11 @@ namespace GolfHandicapApp
                 SelectedRoundType.SelectedIndex = 0;
             }
         }
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            ScoreClick.ClearSelectedItem();
+        }
 
         private void EditScore_Clicked(object sender, EventArgs e)
         {
@@ -43,12 +50,27 @@ namespace GolfHandicapApp
             NewScore.Date = SelectedScoreDate.Date;
             NewScore.RoundType = SelectedRoundType.SelectedItem.ToString();
 
-            if (NewScore != OriginalScore)
+            if (NewScore.Score != OriginalScore.Score || NewScore.Date != OriginalScore.Date || NewScore.RoundType != OriginalScore.RoundType)
             {
-                var editingscore = App.Database.GetScore(NewScore.ScoreID);
+                var editingscore = App.Database.GetScore(OriginalScore.ScoreID);
                 editingscore.Score = NewScore.Score;
                 editingscore.Date = NewScore.Date;
-                editingscore.RoundType = SelectedRoundType.SelectedItem.ToString();
+                editingscore.RoundType = NewScore.RoundType;
+                var teeinfo = App.Database.GetTeeInfo(editingscore.PlayedID);
+
+                if (editingscore.RoundType == "18")
+                {
+                    editingscore.Differential = Math.Round((editingscore.Score - teeinfo.Rating) * 113 / teeinfo.Slope, 2);
+                }
+                else if (editingscore.RoundType == "Front")
+                {
+                    editingscore.Differential = Math.Round((editingscore.Score - teeinfo.FrontRating) * 113 / teeinfo.Slope, 2);
+                }
+                else if (editingscore.RoundType == "Back")
+                {
+                    //some courses dont have a back rating so need to remove the back rating setting if they dont
+                    editingscore.Differential = Math.Round((editingscore.Score - teeinfo.BackRating) * 113 / teeinfo.Slope, 2);
+                }
 
                 App.Database.UpdateScore(editingscore);
                 App.Database.CalculateHandicap(NewScore.RoundType);

@@ -52,102 +52,39 @@ namespace GolfHandicapApp
             SetDataType();
         }
 
-        private void ScoreClickMenu_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            ScoreClickPopup.IsVisible = false;
-            ScoreClickMenu.SelectedItem = null;
-            var selectedScore = (DetailedScore)ScoreList.SelectedItem;
-            switch (e.SelectedItemIndex)
-            {
-                case 0: //edit score
-                    EditScorePopup.IsVisible = true;
-                    SelectedScore.Text = selectedScore.Score.ToString();
-                    SelectedScoreDate.Date = selectedScore.Date;
-                    if (selectedScore.RoundType == "Front")
-                    {
-                        SelectedRoundType.SelectedIndex = 1;
-                    }
-                    else if (selectedScore.RoundType == "Back")
-                    {
-                        SelectedRoundType.SelectedIndex = 2;
-                    }
-                    else
-                    {
-                        SelectedRoundType.SelectedIndex = 0;
-                    }
-                    break;
-
-                case 1: //delete score
-                    App.Database.DeleteScore(selectedScore.ScoreID);
-                    scorelistdata = App.Database.GetPastScores(GetSelectedDisplayMode());
-                    ScoreList.ItemsSource = scorelistdata;
-                    if (scorelistdata.Count < 5)
-                    {
-                        HandicapLabel.Text = "5+ scores are needed for a handicap.";
-                        if (Preferences.ContainsKey("Handicap18"))
-                        {
-                            Preferences.Remove("Handicap18");
-                            HandicapNumberLabel.Text = "";
-                        }
-                    }
-                    break;
-            }
-        }
-
         private void ScoreList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            //ScoreClickPopup.IsVisible = true;
             PopupNavigation.Instance.PushAsync(new ScoreClick(this, (DetailedScore)ScoreList.SelectedItem));
         }
         public void ScoreListMenuClose()
         {
             ScoreList.SelectedItem = null;
         }
-
-        private void ClosePopup(object sender, EventArgs e)
-        {
-            var button = (ImageButton)sender;
-            if (button.ClassId == "CloseScoreClick")
-            {
-                ScoreClickPopup.IsVisible = false;
-                ScoreList.SelectedItem = null;
-            }
-            else if (button.ClassId == "CloseEditScore")
-            {
-                EditScorePopup.IsVisible = false;
-                ScoreList.SelectedItem = null;
-            }
-        }
         public void RefreshScoreList()
         {
             scorelistdata = App.Database.GetPastScores(GetSelectedDisplayMode());
             ScoreList.ItemsSource = scorelistdata;
             //do the same with 9 hole handicap as well
-            if (Preferences.ContainsKey("Handicap18") && scorelistdata.Count >= 5)
+            if (scorelistdata.Count < 5)
             {
-                HandicapLabel.Text = "Handicap: ";
-                HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
+                HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                HandicapNumberLabel.Text = "";
             }
-        }
-
-        private void EditScore_Clicked(object sender, EventArgs e)
-        {
-            var editingscore = App.Database.GetScore(((DetailedScore)ScoreList.SelectedItem).ScoreID);
-            editingscore.Score = int.Parse(SelectedScore.Text);
-            editingscore.Date = SelectedScoreDate.Date;
-
-            editingscore.RoundType = SelectedRoundType.SelectedItem.ToString();
-
-            App.Database.UpdateScore(editingscore);
-            EditScorePopup.IsVisible = false;
-            ScoreList.SelectedItem = null;
-            App.Database.CalculateHandicap(editingscore.RoundType);
-            scorelistdata = App.Database.GetPastScores(GetSelectedDisplayMode());
-            ScoreList.ItemsSource = scorelistdata;
-            if (Preferences.ContainsKey("Handicap18") && scorelistdata.Count >= 5)
+            else
             {
-                HandicapLabel.Text = "Handicap: ";
-                HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
+                if (HandicapLabel.Text != "Handicap: ")
+                {
+                    HandicapLabel.Text = "Handicap: ";
+                }
+
+                if (HandicapDisplayMode.IsToggled)
+                {
+                    HandicapNumberLabel.Text = Preferences.Get("Handicap18", -1.0).ToString();
+                }
+                else
+                {
+                    HandicapNumberLabel.Text = Preferences.Get("Handicap9", -1.0).ToString();
+                }
             }
         }
         private void SetDataType()

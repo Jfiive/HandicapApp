@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:box="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
+             mc:Ignorable="d"
+             x:Class="GolfHandicapApp.EnterCoursePopup">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+        <StackLayout Orientation="Vertical" HeightRequest="275" WidthRequest="300" BackgroundColor="White">
+            <Picker x:Name="StatePicker" Title="Pick a State" Margin="20, 0, 20, 0" SelectedIndexChanged="StatePicker_SelectedIndexChanged">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>MA</x:String>
+                        <x:String>ME</x:String>
+                        <x:String>NH</x:String>
+                        <x:String>VT</x:String>
+                        <x:String>CT</x:String>
+                        <x:String>RI</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <box:AutoSuggestBox x:Name="AutoComplete" PlaceholderText="Course Name" IsEnabled="False" SuggestionChosen="AutoComplete_SuggestionChosen" TextChanged="AutoComplete_TextChanged" DisplayMemberPath="Name" TextMemberPath="Name" Margin="20, 0, 20, 0">
+
+            </box:AutoSuggestBox>
+            <Picker x:Name="TeePicker" Title="Pick a Tee" Margin="20, 0, 20, 0" IsEnabled="False">
+
+            </Picker>
+            <Button x:Name="AddCourseButton" Margin="20, 20, 20, 0" Text="Add Course" Clicked="AddCourseButton_Clicked"></Button>
+        </StackLayout>
+    </StackLayout>
+</pages:PopupPage>
