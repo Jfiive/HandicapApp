@@ -8,7 +8,7 @@
              mc:Ignorable="d"
              x:Class="GolfHandicapApp.EnterCoursePopup">
     <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-        <StackLayout Orientation="Vertical" HeightRequest="275" WidthRequest="300" BackgroundColor="White">
+        <StackLayout Orientation="Vertical" Padding="10" HeightRequest="220" WidthRequest="300" BackgroundColor="White">
             <Picker x:Name="StatePicker" Title="Pick a State" Margin="20, 0, 20, 0" SelectedIndexChanged="StatePicker_SelectedIndexChanged">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
@@ -27,7 +27,7 @@
             <Picker x:Name="TeePicker" Title="Pick a Tee" Margin="20, 0, 20, 0" IsEnabled="False">
 
             </Picker>
-            <Button x:Name="AddCourseButton" Margin="20, 20, 20, 0" Text="Add Course" Clicked="AddCourseButton_Clicked"></Button>
+            <Button x:Name="AddCourseButton" Margin="20, 0, 20, 0" Text="Add Course" Clicked="AddCourseButton_Clicked"></Button>
         </StackLayout>
     </StackLayout>
 </pages:PopupPage>

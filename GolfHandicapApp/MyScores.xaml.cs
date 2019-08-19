@@ -32,7 +32,7 @@ namespace GolfHandicapApp
                 ScoreList.ItemsSource = scorelistdata;
                 if (scorelistdata.Count < 5)
                 {
-                    HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                    HandicapLabel.Text = "5+ scores needed for a handicap.";
                     HandicapNumberLabel.Text = "";
                 }
                 else
@@ -47,7 +47,7 @@ namespace GolfHandicapApp
             //This is 18 because by default the page is going to be in 18 handicap mode
             if (scorelistdata.Count < 5)
             {
-                HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                HandicapLabel.Text = "5+ scores needed for a handicap.";
             }
             SetDataType();
         }
@@ -67,7 +67,7 @@ namespace GolfHandicapApp
             //do the same with 9 hole handicap as well
             if (scorelistdata.Count < 5)
             {
-                HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                HandicapLabel.Text = "5+ scores needed for a handicap.";
                 HandicapNumberLabel.Text = "";
             }
             else
@@ -139,7 +139,7 @@ namespace GolfHandicapApp
                 ScoreList.ItemsSource = scorelistdata;
                 if (scorelistdata.Count < 5)
                 {
-                    HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                    HandicapLabel.Text = "5+ scores needed for a handicap.";
                     HandicapNumberLabel.Text = "";
                 }
                 else
@@ -159,7 +159,7 @@ namespace GolfHandicapApp
                 ScoreList.ItemsSource = scorelistdata;
                 if (scorelistdata.Count < 5)
                 {
-                    HandicapLabel.Text = "5+ scores are needed for a handicap.";
+                    HandicapLabel.Text = "5+ scores needed for a handicap.";
                     HandicapNumberLabel.Text = "";
                 }
                 else
