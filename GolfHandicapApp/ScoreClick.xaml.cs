@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -36,6 +36,7 @@ namespace GolfHandicapApp
 
                 case 1: //delete score
                     App.Database.DeleteScore(selectedScore.ScoreID);
+                    App.Database.CalculateHandicap(Preferences.Get("HandicapDisplayType", 18).ToString());
                     mp.RefreshScoreList();
                     PopupNavigation.Instance.PopAsync();
                     break;

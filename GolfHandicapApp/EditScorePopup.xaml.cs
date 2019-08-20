@@ -78,5 +78,25 @@ namespace GolfHandicapApp
                 PopupNavigation.Instance.PopAllAsync();
             }
         }
+        private void ValidityCheck()
+        {
+            if (!string.IsNullOrEmpty(SelectedScore.Text) && SelectedRoundType.SelectedIndex >= 0)
+            {
+                EditScore.IsEnabled = true;
+            }
+            else
+            {
+                EditScore.IsEnabled = false;
+            }
+        }
+        private void SelectedScore_Unfocused(object sender, FocusEventArgs e)
+        {
+            ValidityCheck();
+        }
+
+        private void SelectedRoundType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ValidityCheck();
+        }
     }
 }

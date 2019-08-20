@@ -15,6 +15,7 @@ namespace GolfHandicapApp
     public partial class EnterCoursePopup : Rg.Plugins.Popup.Pages.PopupPage
     {
         public CourseSelection mp;
+        public int SelectedCourseID = 0;
         public EnterCoursePopup(CourseSelection m)
         {
             InitializeComponent();
@@ -36,10 +37,12 @@ namespace GolfHandicapApp
         private void AutoComplete_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs e)
         {
             var item = (Course)e.SelectedItem;
+            SelectedCourseID = item.CourseID;
             sender.Text = item.Name;
             TeePicker.ItemsSource = App.Database.GetCourseTees(item.CourseID);
             TeePicker.ItemDisplayBinding = new Binding("DisplayName");
             TeePicker.IsEnabled = true;
+            ValidityCheck();
         }
 
         private void AutoComplete_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs e)
@@ -57,6 +60,22 @@ namespace GolfHandicapApp
             NewCourse.InfoID = TeeInfo.InfoID;
             App.Database.SaveCourse(NewCourse);
             PopupNavigation.Instance.PopAllAsync();
+        }
+        private void ValidityCheck()
+        {
+            if (SelectedCourseID > 0 && TeePicker.SelectedIndex >= 0)
+            {
+                AddCourseButton.IsEnabled = true;
+            }
+            else
+            {
+                AddCourseButton.IsEnabled = false;
+            }
+        }
+
+        private void TeePicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ValidityCheck();
         }
     }
 }

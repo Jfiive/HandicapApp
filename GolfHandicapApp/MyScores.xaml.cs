@@ -63,6 +63,7 @@ namespace GolfHandicapApp
         public void RefreshScoreList()
         {
             scorelistdata = App.Database.GetPastScores(GetSelectedDisplayMode());
+            ScoreList.ItemsSource = null;
             ScoreList.ItemsSource = scorelistdata;
             //do the same with 9 hole handicap as well
             if (scorelistdata.Count < 5)
