@@ -20,6 +20,7 @@ namespace GolfHandicapApp
             InitializeComponent();
             mp = p;
             cc = c;
+            SelectedRoundType.SelectedIndex = 0;
         }
 
         private void PostScore_Clicked(object sender, EventArgs e)
@@ -56,6 +57,27 @@ namespace GolfHandicapApp
         {
             base.OnDisappearing();
             cc.DeselectItem();
+        }
+        private void ValidityCheck()
+        {
+            if (!string.IsNullOrEmpty(EnteredScore.Text) && SelectedRoundType.SelectedIndex >= 0)
+            {
+                PostScore.IsEnabled = true;
+            }
+            else
+            {
+                PostScore.IsEnabled = false;
+            }
+        }
+
+        private void SelectedRoundType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ValidityCheck();
+        }
+
+        private void EnteredScore_Unfocused(object sender, FocusEventArgs e)
+        {
+            ValidityCheck();
         }
     }
 }

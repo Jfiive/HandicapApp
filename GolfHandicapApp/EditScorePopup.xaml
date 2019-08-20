@@ -8,11 +8,11 @@
              x:Class="GolfHandicapApp.EditScorePopup">
     <StackLayout Margin="12" Padding="10" HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="310" WidthRequest="250" BackgroundColor="White">
         <Label Text="Score: " Margin="20, 0, 20, 0"></Label>
-        <Entry x:Name="SelectedScore" Margin="20, 0, 20, 0" Keyboard="Numeric"></Entry>
+        <Entry x:Name="SelectedScore" Margin="20, 0, 20, 0" Keyboard="Numeric" Unfocused="SelectedScore_Unfocused"></Entry>
         <Label Text="Date: " Margin="20, 0, 20, 0"></Label>
         <DatePicker Margin="20, 0, 20, 0" x:Name="SelectedScoreDate"></DatePicker>
         <Label Text="Round Type: " Margin="20, 0, 20, 0"></Label>
-        <Picker x:Name="SelectedRoundType" Title="Select Round Type" Margin="20, 0, 20, 0">
+        <Picker x:Name="SelectedRoundType" Title="Select Round Type" Margin="20, 0, 20, 0" SelectedIndexChanged="SelectedRoundType_SelectedIndexChanged">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>18</x:String>
@@ -21,6 +21,6 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <Button x:Name="EditScore" Text="Edit Score" Margin="20, 20, 20, 0" HorizontalOptions="Center" Clicked="EditScore_Clicked"></Button>
+        <Button x:Name="EditScore" Text="Edit Score" Margin="20, 20, 20, 0" HorizontalOptions="Center" Clicked="EditScore_Clicked" IsEnabled="False"></Button>
     </StackLayout>
 </pages:PopupPage>
