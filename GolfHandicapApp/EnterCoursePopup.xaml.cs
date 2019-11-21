@@ -21,11 +21,6 @@ namespace GolfHandicapApp
             InitializeComponent();
             mp = m;
         }
-        //protected override void OnDisappearing()
-        //{
-        //    base.OnDisappearing();
-        //    mp.RefreshCourseList();
-        //}
         private void StatePicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (StatePicker.SelectedItem != null)
@@ -39,9 +34,6 @@ namespace GolfHandicapApp
             var item = (Course)e.SelectedItem;
             SelectedCourseID = item.CourseID;
             sender.Text = item.Name;
-            TeePicker.ItemsSource = App.Database.GetCourseTees(item.CourseID);
-            TeePicker.ItemDisplayBinding = new Binding("DisplayName");
-            TeePicker.IsEnabled = true;
             ValidityCheck();
         }
 
@@ -55,16 +47,14 @@ namespace GolfHandicapApp
         private void AddCourseButton_Clicked(object sender, EventArgs e)
         {
             var NewCourse = new PlayedCourse();
-            var TeeInfo = (PickerTee)TeePicker.SelectedItem;
-            NewCourse.CourseID = TeeInfo.CourseID;
-            NewCourse.InfoID = TeeInfo.InfoID;
+            NewCourse.CourseID = SelectedCourseID;
             App.Database.SaveCourse(NewCourse);
             mp.RefreshCourseList();
             PopupNavigation.Instance.PopAllAsync();
         }
         private void ValidityCheck()
         {
-            if (SelectedCourseID > 0 && TeePicker.SelectedIndex >= 0)
+            if (SelectedCourseID > 0)
             {
                 AddCourseButton.IsEnabled = true;
             }
@@ -72,11 +62,6 @@ namespace GolfHandicapApp
             {
                 AddCourseButton.IsEnabled = false;
             }
-        }
-
-        private void TeePicker_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ValidityCheck();
         }
     }
 }
