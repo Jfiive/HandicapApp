@@ -18,17 +18,11 @@
                 <Grid BackgroundColor="#4d4dff">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="80"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
-                        <ColumnDefinition Width="60"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" TextColor="White" Text="Course" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start"></Label>
-                    <Label Grid.Column="1" TextColor="White" Text="Tee" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
-                    <Label Grid.Column="2" TextColor="White" Text="Rating" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"></Label>
-                    <Label Grid.Column="3" TextColor="White" Text="Slope" HorizontalOptions="FillAndExpand" VerticalTextAlignment="End"></Label>
+                    <Label Grid.Column="0" TextColor="White" Text="Previously Played Courses" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start"></Label>
                 </Grid>
                 <ListView x:Name="CourseList" ItemsSource="{Binding MyCourses}" ItemTapped="CourseList_ItemTapped" RowHeight="55">
                     <ListView.ItemTemplate>
@@ -38,14 +32,8 @@
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="80"></ColumnDefinition>
-                                            <ColumnDefinition Width="60"></ColumnDefinition>
-                                            <ColumnDefinition Width="60"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Label Grid.Column="0" FontAttributes="Bold" Text="{Binding Name}"></Label>
-                                        <Label Grid.Column="1" Text="{Binding TeeName}"></Label>
-                                        <Label Grid.Column="2" Text="{Binding Rating}"></Label>
-                                        <Label Grid.Column="3" Text="{Binding Slope}"></Label>
                                     </Grid>
                                 </StackLayout>
                             </ViewCell>
