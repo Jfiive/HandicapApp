@@ -28,7 +28,7 @@ namespace GolfHandicapApp
         
         public List<DisplayCourse> GetPlayedCourses()
         {
-            return _database.Query<DisplayCourse>("SELECT PlayedCourse.PlayedID, Course.Name, TeeInfo.TeeName, TeeInfo.Rating, TeeInfo.Slope FROM PlayedCourse LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN TeeInfo ON PlayedCourse.InfoID = TeeInfo.InfoID");
+            return _database.Query<DisplayCourse>("SELECT PlayedCourse.PlayedID, Course.Name, Course.CourseID FROM PlayedCourse LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID");
         }
         public TeeInfo GetTeeInfo(int PlayedID)
         {

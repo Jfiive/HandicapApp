@@ -6,7 +6,7 @@
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              mc:Ignorable="d"
              x:Class="GolfHandicapApp.PostScorePopup">
-    <StackLayout Margin="12" Padding="10" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="300" WidthRequest="260" BackgroundColor="White">
+    <StackLayout Margin="12" Padding="10" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="313" WidthRequest="260" BackgroundColor="White">
         <Entry x:Name="EnteredScore" Margin="20, 0, 20, 0" Keyboard="Numeric" Placeholder="Score" Unfocused="EnteredScore_Unfocused"></Entry>
         <Label Text="Date: " Margin="20, 0, 0, 0"></Label>
         <DatePicker Margin="20, 0, 20, 0" x:Name="ScoreDate"></DatePicker>
@@ -19,6 +19,9 @@
                     <x:String>Back</x:String>
                 </x:Array>
             </Picker.ItemsSource>
+        </Picker>
+        <Picker x:Name="TeePicker" Title="Pick a Tee" Margin="20, 0, 20, 0" IsEnabled="False" SelectedIndexChanged="TeePicker_SelectedIndexChanged">
+
         </Picker>
         <Button x:Name="PostScore" Text="Post Score" Margin="20, 20, 20, 0" HorizontalOptions="Center" Clicked="PostScore_Clicked" IsEnabled="False"></Button>
     </StackLayout>
