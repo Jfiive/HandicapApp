@@ -24,9 +24,6 @@
             <box:AutoSuggestBox x:Name="AutoComplete" PlaceholderText="Course Name" IsEnabled="False" SuggestionChosen="AutoComplete_SuggestionChosen" TextChanged="AutoComplete_TextChanged" DisplayMemberPath="Name" TextMemberPath="Name" Margin="20, 0, 20, 0">
 
             </box:AutoSuggestBox>
-            <!--<Picker x:Name="TeePicker" Title="Pick a Tee" Margin="20, 0, 20, 0" IsEnabled="False" SelectedIndexChanged="TeePicker_SelectedIndexChanged">
-
-            </Picker>-->
             <Button x:Name="AddCourseButton" Margin="20, 0, 20, 0" Text="Add Course" Clicked="AddCourseButton_Clicked" IsEnabled="False"></Button>
         </StackLayout>
     </StackLayout>
