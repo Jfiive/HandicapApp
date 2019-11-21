@@ -21,11 +21,11 @@ namespace GolfHandicapApp
             InitializeComponent();
             mp = m;
         }
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            mp.RefreshCourseList();
-        }
+        //protected override void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    mp.RefreshCourseList();
+        //}
         private void StatePicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (StatePicker.SelectedItem != null)
@@ -59,6 +59,7 @@ namespace GolfHandicapApp
             NewCourse.CourseID = TeeInfo.CourseID;
             NewCourse.InfoID = TeeInfo.InfoID;
             App.Database.SaveCourse(NewCourse);
+            mp.RefreshCourseList();
             PopupNavigation.Instance.PopAllAsync();
         }
         private void ValidityCheck()
