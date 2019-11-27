@@ -25,7 +25,6 @@ namespace GolfHandicapApp
         [PrimaryKey, AutoIncrement]
         public int PlayedID { get; set; }
         public int CourseID { get; set; }
-        public int InfoID { get; set; }
     }
     public class TeeInfo
     {
@@ -46,6 +45,7 @@ namespace GolfHandicapApp
     {
         [PrimaryKey, AutoIncrement]
         public int ScoreID { get; set; }
+        public int InfoID { get; set; }
         public DateTime Date { get; set; }
         public int Score { get; set; }
         public double Differential { get; set; }
@@ -65,6 +65,8 @@ namespace GolfHandicapApp
     {
         //this is not a table and is only used to store the joined query results into an object so no primary key/ auto increment needed
         public int ScoreID { get; set; }
+        public int CourseID { get; set; }
+        public int InfoID { get; set; }
         public DateTime Date { get; set; }
         public int Score { get; set; }
         public double Differential { get; set; }
@@ -92,5 +94,6 @@ namespace GolfHandicapApp
         public string TeeName { get; set; }
         public double Rating { get; set; }
         public int Slope { get; set; }
+        public DateTime Date { get; set; }
     }
 }

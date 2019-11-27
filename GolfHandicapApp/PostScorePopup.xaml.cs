@@ -27,13 +27,16 @@ namespace GolfHandicapApp
             TeePicker.ItemsSource = App.Database.GetCourseTees(selectedcourse.CourseID);
             TeePicker.ItemDisplayBinding = new Binding("DisplayName");
             TeePicker.IsEnabled = true;
+            ScoreDate.MaximumDate = DateTime.Today;
         }
 
         private void PostScore_Clicked(object sender, EventArgs e)
         {
             var score = new Scores();
-            var teeinfo = App.Database.GetTeeInfo(selectedcourse.PlayedID);
+            var selectedtee = (PickerTee)TeePicker.SelectedItem;
+            var teeinfo = App.Database.GetTeeInfo(selectedtee.InfoID);
             score.Score = int.Parse(EnteredScore.Text);
+            score.InfoID = teeinfo.InfoID;
             score.Date = ScoreDate.Date;
             score.RoundType = SelectedRoundType.SelectedItem.ToString();
             if (score.RoundType == "18")

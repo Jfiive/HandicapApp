@@ -9,15 +9,14 @@
         <ContentPage Title="Master">
             <ContentPage.Content>
                 <StackLayout>
-                    <ListView x:Name="MenuList" ItemSelected="MenuList_ItemSelected">
-                        <ListView.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>Your Scores</x:String>
-                                <x:String>Post A Score</x:String>
-                                <x:String>Handicap History</x:String>
-                                <x:String>Settings</x:String>
-                            </x:Array>
-                        </ListView.ItemsSource>
+                    <ListView x:Name="MenuList" ItemsSource="{Binding MenuData}" ItemSelected="MenuList_ItemSelected" RowHeight="50">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Label Text="{Binding}" Margin="10, 5, 0, 5" VerticalTextAlignment="Center" HeightRequest="70" FontSize="Medium"></Label>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </StackLayout>
             </ContentPage.Content>

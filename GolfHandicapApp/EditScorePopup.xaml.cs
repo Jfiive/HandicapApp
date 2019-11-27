@@ -23,7 +23,6 @@ namespace GolfHandicapApp
             OriginalScore = Score;
             ScoreClick = PrevPage;
             SelectedScore.Text = Score.Score.ToString();
-            SelectedScoreDate.Date = Score.Date;
             if (Score.RoundType == "Front")
             {
                 SelectedRoundType.SelectedIndex = 1;
@@ -36,6 +35,17 @@ namespace GolfHandicapApp
             {
                 SelectedRoundType.SelectedIndex = 0;
             }
+            //needs to have the courseID from the MyScores Page and also needs to have the InfoID from the Scores table so it can set it to the right tee
+            TeePicker.ItemsSource = App.Database.GetCourseTees(mp.GetSelectedCourseID());
+            TeePicker.ItemDisplayBinding = new Binding("DisplayName");
+            TeePicker.IsEnabled = true;
+            foreach (PickerTee item in TeePicker.ItemsSource)
+            {
+                if (item.InfoID == OriginalScore.InfoID)
+                {
+                    TeePicker.SelectedItem = item;
+                }
+            }
         }
         protected override void OnDisappearing()
         {
@@ -47,16 +57,16 @@ namespace GolfHandicapApp
         {
             var NewScore = new DetailedScore();
             NewScore.Score = int.Parse(SelectedScore.Text);
-            NewScore.Date = SelectedScoreDate.Date;
+            NewScore.InfoID = ((PickerTee)TeePicker.SelectedItem).InfoID;
             NewScore.RoundType = SelectedRoundType.SelectedItem.ToString();
 
-            if (NewScore.Score != OriginalScore.Score || NewScore.Date != OriginalScore.Date || NewScore.RoundType != OriginalScore.RoundType)
+            if (NewScore.Score != OriginalScore.Score || NewScore.InfoID != OriginalScore.InfoID || NewScore.RoundType != OriginalScore.RoundType)
             {
                 var editingscore = App.Database.GetScore(OriginalScore.ScoreID);
                 editingscore.Score = NewScore.Score;
-                editingscore.Date = NewScore.Date;
+                editingscore.InfoID = NewScore.InfoID;
                 editingscore.RoundType = NewScore.RoundType;
-                var teeinfo = App.Database.GetTeeInfo(editingscore.PlayedID);
+                var teeinfo = App.Database.GetTeeInfo(editingscore.InfoID);
 
                 if (editingscore.RoundType == "18")
                 {
@@ -80,7 +90,7 @@ namespace GolfHandicapApp
         }
         private void ValidityCheck()
         {
-            if (!string.IsNullOrEmpty(SelectedScore.Text) && SelectedRoundType.SelectedIndex >= 0)
+            if (!string.IsNullOrEmpty(SelectedScore.Text) && SelectedRoundType.SelectedIndex >= 0 && TeePicker.SelectedIndex >= 0)
             {
                 EditScore.IsEnabled = true;
             }
@@ -95,6 +105,10 @@ namespace GolfHandicapApp
         }
 
         private void SelectedRoundType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ValidityCheck();
+        }
+        private void TeePicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             ValidityCheck();
         }

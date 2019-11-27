@@ -45,6 +45,21 @@ namespace GolfHandicapApp
             {
                 Preferences.Set("HandicapDisplayType", 18);
             }
+            if (!Preferences.ContainsKey("SeparateBySeason"))
+            {
+                Preferences.Set("SeparateBySeason", false);
+            }
+            if (!Preferences.ContainsKey("LatestSeason"))
+            {
+                Preferences.Set("LatestSeason", Database.GetLatestSeason());
+            }
+            //SeasonsView does not persist through app restart like all the other ones do so it needs to get set to nothing every time
+            if (Preferences.Get("SeasonsView", 0) > 0)
+            {
+                Preferences.Set("SeasonsView", 0);
+                Database.CalculateHandicap("18");
+                Database.CalculateHandicap("9");
+            }
             MainPage = new MainPage();
         }
 
