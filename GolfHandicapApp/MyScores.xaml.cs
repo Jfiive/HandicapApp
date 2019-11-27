@@ -60,6 +60,11 @@ namespace GolfHandicapApp
         {
             ScoreList.SelectedItem = null;
         }
+        public int GetSelectedCourseID()
+        {
+            var item = (DetailedScore)ScoreList.SelectedItem;
+            return item.CourseID;
+        }
         public void RefreshScoreList()
         {
             scorelistdata = App.Database.GetPastScores(GetSelectedDisplayMode());

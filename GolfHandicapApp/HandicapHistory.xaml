@@ -21,8 +21,8 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}"></Label>
-                        <Label Grid.Column="1" Text="{Binding Number}"></Label>
+                        <Label Grid.Column="0" Text="{Binding Date, StringFormat='{}{0:MM/dd/yyyy}'}" Margin="3, 0, 0, 0" FontSize="Medium"></Label>
+                        <Label Grid.Column="1" Text="{Binding Number}" FontSize="Medium"></Label>
                     </Grid>
                 </StackLayout>
             </ViewCell>
@@ -35,7 +35,7 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Text="{Binding Date, StringFormat='{}{0:dd/MM/yyyy}'}"></Label>
+                        <Label Grid.Column="0" Text="{Binding Date, StringFormat='{}{0:dd/MM/yyyy}'}" Margin="3, 0, 0, 0"></Label>
                         <Label Grid.Column="1" Text="{Binding Number}"></Label>
                     </Grid>
                 </StackLayout>
@@ -58,7 +58,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Label Grid.Column="0" TextColor="White" Text="Date" HorizontalOptions="FillAndExpand"></Label>
+                <Label Grid.Column="0" TextColor="White" Text="Date" HorizontalOptions="FillAndExpand" Margin="3, 0, 0, 0"></Label>
                 <Label Grid.Column="1" TextColor="White" Text="Handicap" HorizontalOptions="FillAndExpand"></Label>
             </Grid>
             <ListView x:Name="HandicapHistoryList" ItemsSource="{Binding HandicapHistoryData}" SelectionMode="None">

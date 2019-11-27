@@ -22,20 +22,13 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" TextColor="White" Text="Previously Played Courses" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start"></Label>
+                    <Label Grid.Column="0" TextColor="White" Text="Previously Played Courses" Margin="3, 0, 0, 3" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Start"></Label>
                 </Grid>
                 <ListView x:Name="CourseList" ItemsSource="{Binding MyCourses}" ItemTapped="CourseList_ItemTapped" RowHeight="55">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" FontAttributes="Bold" Text="{Binding Name}"></Label>
-                                    </Grid>
-                                </StackLayout>
+                                <Label Grid.Column="0" Margin="3, 0, 0, 0" HeightRequest="55" VerticalTextAlignment="Center" FontSize="Medium" Text="{Binding Name}"></Label>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

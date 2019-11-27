@@ -28,11 +28,35 @@ namespace GolfHandicapApp
         
         public List<DisplayCourse> GetPlayedCourses()
         {
-            return _database.Query<DisplayCourse>("SELECT PlayedCourse.PlayedID, Course.Name, Course.CourseID FROM PlayedCourse LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID");
+            var output = _database.Query<DisplayCourse>("SELECT PlayedCourse.PlayedID, Course.Name, Course.CourseID, Scores.Date FROM PlayedCourse LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN Scores ON PlayedCourse.PlayedID = Scores.PlayedID").ToList();
+            if (Preferences.Get("SeparateBySeason", false) == true)
+            {
+                int year;
+                if (Preferences.Get("SeasonsView", 0) > 0)
+                {
+                    year = Preferences.Get("SeasonsView", 0);
+                    output = output.Where(c => c.Date.Year == year).GroupBy(c => c.Name).Select(c => c.FirstOrDefault()).ToList();
+                }
+                else
+                {
+                    if (_database.Table<Scores>().Any())
+                    {
+                        //needs to only do this if there are scores in the database. Otherwise the first course that they enter wont show up on the list afterwards
+                        //a blank datetime object is a new score that was just added but there arent any scores in the database yet
+                        year = Preferences.Get("LatestSeason", 0);
+                        output = output.Where(c => c.Date.Year == year || c.Date == new DateTime()).GroupBy(c => c.Name).Select(c => c.FirstOrDefault()).ToList();
+                    }
+                }
+            }
+            else
+            {
+                output = output.GroupBy(c => c.Name).Select(c => c.FirstOrDefault()).ToList();
+            }
+            return output;
         }
-        public TeeInfo GetTeeInfo(int PlayedID)
+        public TeeInfo GetTeeInfo(int InfoID)
         {
-            return _database.Query<TeeInfo>("SELECT * FROM TeeInfo WHERE InfoID = (SELECT InfoID FROM PlayedCourse WHERE PlayedID = " + PlayedID + ")").First();
+            return _database.Table<TeeInfo>().Single(t => t.InfoID == InfoID);
         }
         public List<Course> SearchCourses(string Criteria)
         {
@@ -59,6 +83,12 @@ namespace GolfHandicapApp
             }
             return output;
         }
+        public List<int> GetSeasons()
+        {
+            var currentSeason = Preferences.Get("SeasonsView", 0);
+            var table = _database.Table<Scores>().ToList();
+            return table.Where(s => s.Date.Year != currentSeason).Select(s => s.Date.Year).Distinct().ToList();
+        }
         public void ResetDatabase()
         {
             _database.Execute("DELETE FROM Scores");
@@ -70,14 +100,32 @@ namespace GolfHandicapApp
         }
         public List<Handicap> GetHandicaps(int RoundType)
         {
+            var output = new List<Handicap>();
             if (RoundType == 18)
             {
-                return _database.Table<Handicap>().Where(h => h.Type == "18").OrderByDescending(o => o.Date).ToList();
+                output = _database.Table<Handicap>().Where(h => h.Type == "18").OrderByDescending(o => o.Date).ToList();
             }
             else
             {
-                return _database.Table<Handicap>().Where(h => h.Type == "Front" || h.Type == "Back").OrderByDescending(o => o.Date).ToList();
+                output = _database.Table<Handicap>().Where(h => h.Type == "Front" || h.Type == "Back").OrderByDescending(o => o.Date).ToList();
             }
+
+            //filter more based on user settings
+            if (Preferences.Get("SeparateBySeason", false) == true)
+            {
+                int year;
+                if (Preferences.Get("SeasonsView", 0) > 0)
+                {
+                    year = Preferences.Get("SeasonsView", 0);
+                    output = output.Where(h => h.Date.Year == year).ToList();
+                }
+                else
+                {
+                    year = Preferences.Get("LatestSeason", 0);
+                    output = output.Where(h => h.Date.Year == year).ToList();
+                }
+            }
+            return output;
         }
         public int SaveHandicap(Handicap handicap)
         {
@@ -85,14 +133,32 @@ namespace GolfHandicapApp
         }
         public List<DetailedScore> GetPastScores(string RoundType)
         {
+            var output = new List<DetailedScore>();
             if (RoundType == "18")
             {
-                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, TeeInfo.TeeName FROM Scores LEFT JOIN PlayedCourse ON Scores.PlayedID = PlayedCourse.PlayedID LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN TeeInfo ON PlayedCourse.InfoID = TeeInfo.InfoID WHERE Scores.RoundType = '18' ORDER BY Scores.Date DESC");
+                output = _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, Course.CourseID, TeeInfo.TeeName, TeeInfo.InfoID FROM Scores LEFT JOIN PlayedCourse ON Scores.PlayedID = PlayedCourse.PlayedID LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN TeeInfo ON Scores.InfoID = TeeInfo.InfoID WHERE Scores.RoundType = '18' ORDER BY Scores.Date DESC");
             }
             else
             {
-                return _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, TeeInfo.TeeName FROM Scores LEFT JOIN PlayedCourse ON Scores.PlayedID = PlayedCourse.PlayedID LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN TeeInfo ON PlayedCourse.InfoID = TeeInfo.InfoID WHERE Scores.RoundType = 'Front' OR Scores.RoundType = 'Back' ORDER BY Scores.Date DESC");
+                output =  _database.Query<DetailedScore>("SELECT Scores.ScoreID, Scores.Date, Scores.Score, Scores.Differential, Scores.RoundType, Scores.UsedForCalc, Course.Name, Course.CourseID, TeeInfo.TeeName, TeeInfo.InfoID FROM Scores LEFT JOIN PlayedCourse ON Scores.PlayedID = PlayedCourse.PlayedID LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN TeeInfo ON Scores.InfoID = TeeInfo.InfoID WHERE Scores.RoundType = 'Front' OR Scores.RoundType = 'Back' ORDER BY Scores.Date DESC");
             }
+
+            //filter more based on user settings
+            if (Preferences.Get("SeparateBySeason", false) == true)
+            {
+                int year;
+                if (Preferences.Get("SeasonsView", 0) > 0)
+                {
+                    year = Preferences.Get("SeasonsView", 0);
+                    output = output.Where(s => s.Date.Year == year).ToList();
+                }
+                else
+                {
+                    year = Preferences.Get("LatestSeason", 0);
+                    output = output.Where(s => s.Date.Year == year).ToList();
+                }
+            }
+            return output;
         }
         public DateTime GetLastEnteredScoreDate(string RoundType)
         {
@@ -152,7 +218,22 @@ namespace GolfHandicapApp
         }
         public int SaveScore(Scores score)
         {
+            if (score.Date.Year > Preferences.Get("LatestSeason", 0))
+            {
+                Preferences.Set("LatestSeason", score.Date.Year);
+            }
             return _database.Insert(score);
+        }
+        public int GetLatestSeason()
+        {
+            if (_database.Table<Scores>().Any())
+            {
+                return _database.Table<Scores>().Max(s => s.Date.Year);
+            }
+            else
+            {
+                return 0;
+            }
         }
         public int UpdateCourse (Course course)
         {
@@ -170,45 +251,52 @@ namespace GolfHandicapApp
         {
             return _database.Table<Handicap>().OrderByDescending(o => o.Date).FirstOrDefault().Number;
         }
-        public int GetNumberOfScores(string RoundType)
+        public List<Scores> GetUsedScores(string RoundType)
         {
+            int year;
+            var output = new List<Scores>();
             if (RoundType == "Front" || RoundType == "Back")
             {
-                return _database.Table<Scores>().Where(s => s.RoundType == "Front" || s.RoundType == "Back").Count();
+                output = _database.Table<Scores>().Where(s => s.RoundType == "Front" || s.RoundType == "Back").ToList();
             }
             else
             {
-                return _database.Table<Scores>().Where(s => s.RoundType == "18").Count();
+                output = _database.Table<Scores>().Where(s => s.RoundType == "18").ToList();
             }
+
+            if (Preferences.Get("SeparateBySeason", false) == true)
+            {
+                if (Preferences.Get("SeasonsView", 0) > 0)
+                {
+                    year = Preferences.Get("SeasonsView", 0);
+                }
+                else
+                {
+                    year = Preferences.Get("LatestSeason", 0);
+                }
+                output = output.Where(s => s.Date.Year == year).ToList();
+            }
+
+            return output;
         }
         public List<Scores> GetLowestScores(int Number)
         {
             return _database.Table<Scores>().OrderBy(o => o.Score).Take(Number).ToList();
         }
-        public List<double> GetLowestScoresDifferentials(int Number, string RoundType)
+        public List<double> GetLowestScoresDifferentials(int Number, List<Scores> ScoreList)
         {
-            var scorelist = new List<Scores>();
-            if (RoundType == "18")
-            {
-                scorelist = _database.Table<Scores>().Where(s => s.RoundType == "18").ToList();
-            }
-            else
-            {
-                scorelist = _database.Table<Scores>().Where(s => s.RoundType == "Front" || s.RoundType == "Back").ToList();
-            }
-
             if (Number < 10)
             {
                 //this turns the scorelist into the lowest X number of scores
-                scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+                ScoreList = ScoreList.OrderBy(o => o.Differential).Take(Number).ToList();
             }
             else
             {
                 //needs to take the last 20 scores instead of using all the scores that are available
-                scorelist = scorelist.OrderByDescending(o => o.ScoreID).Take(20).ToList();
-                scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+                ScoreList = ScoreList.OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                ScoreList = ScoreList.OrderBy(o => o.Differential).Take(Number).ToList();
             }
-            return scorelist.Select(o => o.Differential).ToList();
+            return ScoreList.Select(o => o.Differential).ToList();
         }
         public int DeleteCourse(int ID)
         {
@@ -218,16 +306,34 @@ namespace GolfHandicapApp
         {
             return _database.Delete<Scores>(ID);
         }
+        public bool IsLastScoreOfSeason(int Year)
+        {
+            var scores = _database.Table<Scores>().ToList();
+            var count = scores.Where(s => s.Date.Year == Year).ToList().Count;
+            if (count == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void CalculateHandicap(string RoundType)
         {
-            var ScoreCount = GetNumberOfScores(RoundType);
-            if (ScoreCount < 5)
+            if (!_database.Table<Scores>().Any())
+            {
+                //will throw an error if this is called and there are no scores in the database yet
+                return;
+            }
+            var ScoreData = GetUsedScores(RoundType);
+            if (ScoreData.Count < 5)
             {
                 return;
             }
 
-            var ScoresToUse = GetNumberOfScoresToUse(ScoreCount);
-            var LowestScores = GetLowestScoresDifferentials(ScoresToUse, RoundType);
+            var ScoresToUse = GetNumberOfScoresToUse(ScoreData.Count);
+            var LowestScores = GetLowestScoresDifferentials(ScoresToUse, ScoreData);
             UpdateLowestScoreFlags(ScoresToUse, RoundType);
             var handicap = LowestScores.Average() * 0.96;
             //eventually make every decimal in the database to be a double since the handicap has to be a double and itll make things a lot easier
