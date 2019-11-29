@@ -39,7 +39,6 @@ namespace GolfHandicapApp
         public void RefreshCourseList()
         {
             mycourses = App.Database.GetPlayedCourses();
-            CourseList.ItemsSource = null;
             CourseList.ItemsSource = mycourses;
             if (mycourses.Count == 1)
             {
