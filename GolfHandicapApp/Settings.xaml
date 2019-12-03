@@ -25,7 +25,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Text="Display date as dd/mm/yyyy" FontSize="Medium"></Label>
-                <Switch Grid.Column="1" x:Name="DisplayEUDate" Toggled="DisplayEUDate_Toggled"></Switch>
+                <Switch Grid.Column="1" x:Name="DisplayEUDate"></Switch>
             </Grid>
 
             <Grid Margin="5, 0, 5, 30">
@@ -37,7 +37,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Grid.Column="0" Text="Highlight scores used to calculate handicap" FontSize="Medium"></Label>
-                <Switch Grid.Column="1" x:Name="HighlightScores" Toggled="HighlightScores_Toggled"></Switch>
+                <Switch Grid.Column="1" x:Name="HighlightScores"></Switch>
             </Grid>
 
             <Grid Margin="5, 0, 5, 30">
@@ -53,11 +53,11 @@
                         <FormattedString>
                             <Span FontSize="Medium" Text="Separate handicaps by season (year)"></Span>
                             <Span Text="&#x0a;"></Span>
-                            <Span FontSize="Small" Text="A new season will automatically be created when you enter a handicap for the first time of a new year. Only the most current season will be listed on all other screens. Past seasons can still be viewed."></Span>
+                            <Span FontSize="Small" Text="A new season will automatically be created when you enter a score for the first time of a new year. Only the most current season will be listed on all other screens. Past seasons can still be viewed."></Span>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-                <Switch Grid.Column="1" x:Name="SeparateBySeason" Toggled="SeparateBySeason_Toggled"></Switch>
+                <Switch Grid.Column="1" x:Name="SeparateBySeason"></Switch>
             </Grid>
         </StackLayout>
     </ContentPage.Content>
