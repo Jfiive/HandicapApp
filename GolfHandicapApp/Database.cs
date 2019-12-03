@@ -41,8 +41,6 @@ namespace GolfHandicapApp
                 {
                     if (_database.Table<Scores>().Any())
                     {
-                        //needs to only do this if there are scores in the database. Otherwise the first course that they enter wont show up on the list afterwards
-                        //a blank datetime object is a new score that was just added but there arent any scores in the database yet
                         year = Preferences.Get("LatestSeason", 0);
                         output = output.Where(c => c.Date.Year == year || c.Date == new DateTime()).GroupBy(c => c.Name).Select(c => c.FirstOrDefault()).ToList();
                     }
