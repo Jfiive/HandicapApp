@@ -83,7 +83,7 @@ namespace GolfHandicapApp
         }
         public List<int> GetSeasons()
         {
-            var currentSeason = Preferences.Get("SeasonsView", 0);
+            var currentSeason = Preferences.Get("LatestSeason", 0);
             var table = _database.Table<Scores>().ToList();
             return table.Where(s => s.Date.Year != currentSeason).Select(s => s.Date.Year).Distinct().ToList();
         }
@@ -319,9 +319,9 @@ namespace GolfHandicapApp
         }
         public void CalculateHandicap(string RoundType)
         {
-            if (!_database.Table<Scores>().Any())
+            if (!_database.Table<Scores>().Where(s => s.RoundType == RoundType).Any())
             {
-                //will throw an error if this is called and there are no scores in the database yet
+                //will throw an error if there are no scores yet in the database for that round type and this is called and it doesnt need to be called with no scores anyways
                 return;
             }
             var ScoreData = GetUsedScores(RoundType);

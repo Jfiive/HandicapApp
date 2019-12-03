@@ -16,18 +16,21 @@ namespace GolfHandicapApp
         public Settings()
         {
             InitializeComponent();
-            //switch all the switches to the saved settings
+            //toggled gets set here so that the toggled event doesnt get fired on initial page load
             if (Preferences.ContainsKey("DisplayEUDate"))
             {
                 DisplayEUDate.IsToggled = Preferences.Get("DisplayEUDate", false);
+                DisplayEUDate.Toggled += DisplayEUDate_Toggled;
             }
             if (Preferences.ContainsKey("HighlightScores"))
             {
                 HighlightScores.IsToggled = Preferences.Get("HighlightScores", false);
+                HighlightScores.Toggled += HighlightScores_Toggled;
             }
             if (Preferences.ContainsKey("SeparateBySeason"))
             {
                 SeparateBySeason.IsToggled = Preferences.Get("SeparateBySeason", false);
+                SeparateBySeason.Toggled += SeparateBySeason_Toggled;
             }
         }
 

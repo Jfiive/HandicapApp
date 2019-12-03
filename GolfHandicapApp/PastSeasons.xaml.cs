@@ -20,6 +20,11 @@ namespace GolfHandicapApp
             InitializeComponent();
             var data = App.Database.GetSeasons();
             SeasonList.ItemsSource = data;
+            if (data.Count == 0)
+            {
+                Title = "Only Season is Current Season";
+                ClearSeason.IsVisible = false;
+            }
             if (Preferences.Get("SeasonsView", 0) > 0)
             {
                 //set the selected item to be what the current viewed season
