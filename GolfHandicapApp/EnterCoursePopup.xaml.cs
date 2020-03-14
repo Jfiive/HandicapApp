@@ -49,8 +49,9 @@ namespace GolfHandicapApp
             var NewCourse = new PlayedCourse();
             NewCourse.CourseID = SelectedCourseID;
             App.Database.SaveCourse(NewCourse);
-            mp.RefreshCourseList();
+            //mp.RefreshCourseList();
             PopupNavigation.Instance.PopAllAsync();
+            (Application.Current.MainPage as MainPage).ClickPage("Post a Score");
         }
         private void ValidityCheck()
         {

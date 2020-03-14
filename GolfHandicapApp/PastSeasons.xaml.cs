@@ -36,6 +36,7 @@ namespace GolfHandicapApp
         private void SeasonList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             Preferences.Set("SeasonsView", (int)SeasonList.SelectedItem);
+            (Application.Current.MainPage as MainPage).ClickPage("Your Scores");
         }
 
         private void ClearSeason_Clicked(object sender, EventArgs e)

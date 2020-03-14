@@ -69,5 +69,37 @@ namespace GolfHandicapApp
             }
             MenuList.ItemsSource = menudata;
         }
+
+        public void ClickPage(string PageName)
+        {
+            MenuList.SelectedItem = null;
+            switch (PageName)
+            {
+                case "Your Scores":
+                    Detail = new NavigationPage(new MyScores());
+                    IsPresented = false;
+                    break;
+
+                case "Post a Score":
+                    Detail = new NavigationPage(new CourseSelection());
+                    IsPresented = false;
+                    break;
+
+                case "Handicap History":
+                    Detail = new NavigationPage(new HandicapHistory());
+                    IsPresented = false;
+                    break;
+
+                case "Settings":
+                    Detail = new NavigationPage(new Settings());
+                    IsPresented = false;
+                    break;
+
+                case "Past Seasons":
+                    Detail = new NavigationPage(new PastSeasons());
+                    IsPresented = false;
+                    break;
+            }
+        }
     }
 }
