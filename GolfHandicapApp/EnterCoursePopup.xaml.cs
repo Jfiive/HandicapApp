@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -48,6 +48,15 @@ namespace GolfHandicapApp
         {
             var NewCourse = new PlayedCourse();
             NewCourse.CourseID = SelectedCourseID;
+
+            if (Preferences.Get("SeasonsView", 0) > 0)
+            {
+                NewCourse.Season = Preferences.Get("SeasonsView", 0);
+            }
+            else
+            {
+                NewCourse.Season = Preferences.Get("LatestSeason", 0);
+            }
             App.Database.SaveCourse(NewCourse);
             //mp.RefreshCourseList();
             PopupNavigation.Instance.PopAllAsync();

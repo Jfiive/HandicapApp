@@ -25,6 +25,7 @@ namespace GolfHandicapApp
         [PrimaryKey, AutoIncrement]
         public int PlayedID { get; set; }
         public int CourseID { get; set; }
+        public int Season { get; set; }
     }
     public class TeeInfo
     {
@@ -91,9 +92,6 @@ namespace GolfHandicapApp
         public int PlayedID { get; set; }
         public int CourseID { get; set; }
         public string Name { get; set; }
-        public string TeeName { get; set; }
-        public double Rating { get; set; }
-        public int Slope { get; set; }
-        public DateTime Date { get; set; }
+        public int Season { get; set; }
     }
 }

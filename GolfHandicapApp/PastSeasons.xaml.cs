@@ -36,13 +36,24 @@ namespace GolfHandicapApp
         private void SeasonList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             Preferences.Set("SeasonsView", (int)SeasonList.SelectedItem);
+            if (Preferences.Get("SeparateBySeason", false) == true)
+            {
+                App.Database.CalculateHandicap("18");
+                App.Database.CalculateHandicap("9");
+            }
             (Application.Current.MainPage as MainPage).ClickPage("Your Scores");
         }
 
         private void ClearSeason_Clicked(object sender, EventArgs e)
         {
             Preferences.Set("SeasonsView", 0);
+            if (SeasonList.SelectedItem != null && Preferences.Get("SeparateBySeason", false) == true)
+            {
+                App.Database.CalculateHandicap("18");
+                App.Database.CalculateHandicap("9");
+            }
             SeasonList.SelectedItem = null;
+            (Application.Current.MainPage as MainPage).ClickPage("Your Scores");
         }
     }
 }

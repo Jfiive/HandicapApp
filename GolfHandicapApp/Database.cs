@@ -28,21 +28,21 @@ namespace GolfHandicapApp
         
         public List<DisplayCourse> GetPlayedCourses()
         {
-            var output = _database.Query<DisplayCourse>("SELECT PlayedCourse.PlayedID, Course.Name, Course.CourseID, Scores.Date FROM PlayedCourse LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID LEFT JOIN Scores ON PlayedCourse.PlayedID = Scores.PlayedID").ToList();
+            var output = _database.Query<DisplayCourse>("SELECT PlayedCourse.PlayedID, PlayedCourse.Season, Course.Name, Course.CourseID FROM PlayedCourse LEFT JOIN Course ON PlayedCourse.CourseID = Course.CourseID").ToList();
             if (Preferences.Get("SeparateBySeason", false) == true)
             {
                 int year;
                 if (Preferences.Get("SeasonsView", 0) > 0)
                 {
                     year = Preferences.Get("SeasonsView", 0);
-                    output = output.Where(c => c.Date.Year == year).GroupBy(c => c.Name).Select(c => c.FirstOrDefault()).ToList();
+                    output = output.Where(c => c.Season == year).GroupBy(c => c.Name).Select(c => c.FirstOrDefault()).ToList();
                 }
                 else
                 {
                     if (_database.Table<Scores>().Any())
                     {
                         year = Preferences.Get("LatestSeason", 0);
-                        output = output.Where(c => c.Date.Year == year || c.Date == new DateTime()).GroupBy(c => c.Name).Select(c => c.FirstOrDefault()).ToList();
+                        output = output.Where(c => c.Season == year).GroupBy(c => c.Name).Select(c => c.FirstOrDefault()).ToList();
                     }
                 }
             }
@@ -87,10 +87,11 @@ namespace GolfHandicapApp
             var table = _database.Table<Scores>().ToList();
             return table.Where(s => s.Date.Year != currentSeason).Select(s => s.Date.Year).Distinct().ToList();
         }
-        public void ResetDatabase()
+        public void ResetApp()
         {
             _database.Execute("DELETE FROM Scores");
             _database.Execute("DELETE FROM Handicap");
+            _database.Execute("DELETE FROM PlayedCourse");
         }
         public int SaveCourse(PlayedCourse course)
         {
@@ -171,6 +172,20 @@ namespace GolfHandicapApp
         }
         public void UpdateLowestScoreFlags(int Number, string RoundType)
         {
+            //gets the current season to be used below if it is needed
+            var currentSeason = 0;
+            if (Preferences.Get("SeparateBySeason", false) == true)
+            {
+                if (Preferences.Get("SeasonsView", 0) > 0)
+                {
+                    currentSeason = Preferences.Get("SeasonsView", 0);
+                }
+                else
+                {
+                    currentSeason = Preferences.Get("LatestSeason", 0);
+                }
+            }
+
             if (RoundType == "18")
             {
                 _database.Execute("UPDATE Scores SET UsedForCalc = 0 WHERE RoundType = '18'");
@@ -178,12 +193,26 @@ namespace GolfHandicapApp
                 if (Number < 10)
                 {
                     //this turns the scorelist into the lowest X number of scores
-                    scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+                    if (Preferences.Get("SeparateBySeason", false) == true)
+                    {
+                        scorelist = scorelist.Where(o => o.Date.Year == currentSeason).OrderBy(o => o.Differential).Take(Number).ToList();
+                    }
+                    else
+                    {
+                        scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+                    }
                 }
                 else
                 {
                     //needs to take the last 20 scores instead of using all the scores that are available
-                    scorelist = scorelist.OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                    if (Preferences.Get("SeparateBySeason", false) == true)
+                    {
+                        scorelist = scorelist.Where(o => o.Date.Year == currentSeason).OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                    }
+                    else
+                    {
+                        scorelist = scorelist.OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                    }
                     scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
                 }
                 foreach (var item in scorelist)
@@ -198,13 +227,27 @@ namespace GolfHandicapApp
                 var scorelist = _database.Table<Scores>().Where(s => s.RoundType == "Front" || s.RoundType == "Back").ToList();
                 if (Number < 10)
                 {
-                    //this turns the scorelist into the lowest X number of scores
-                    scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+                    if (Preferences.Get("SeparateBySeason", false) == true)
+                    {
+                        scorelist = scorelist.Where(o => o.Date.Year == currentSeason).OrderBy(o => o.Differential).Take(Number).ToList();
+                    }
+                    else
+                    {
+                        //this turns the scorelist into the lowest X number of scores
+                        scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
+                    }
                 }
                 else
                 {
-                    //needs to take the last 20 scores instead of using all the scores that are available
-                    scorelist = scorelist.OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                    if (Preferences.Get("SeparateBySeason", false) == true)
+                    {
+                        scorelist = scorelist.Where(o => o.Date.Year == currentSeason).OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                    }
+                    else
+                    {
+                        //needs to take the last 20 scores instead of using all the scores that are available
+                        scorelist = scorelist.OrderByDescending(o => o.ScoreID).Take(20).ToList();
+                    }
                     scorelist = scorelist.OrderBy(o => o.Differential).Take(Number).ToList();
                 }
                 foreach (var item in scorelist)
