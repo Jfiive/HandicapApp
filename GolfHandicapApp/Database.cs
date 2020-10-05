@@ -376,7 +376,7 @@ namespace GolfHandicapApp
             var ScoresToUse = GetNumberOfScoresToUse(ScoreData.Count);
             var LowestScores = GetLowestScoresDifferentials(ScoresToUse, ScoreData);
             UpdateLowestScoreFlags(ScoresToUse, RoundType);
-            var handicap = LowestScores.Average() * 0.96;
+            var handicap = LowestScores.Average();
             //eventually make every decimal in the database to be a double since the handicap has to be a double and itll make things a lot easier
             handicap = Convert.ToDouble(handicap.ToString("0.#"));
             if (RoundType == "18")
@@ -453,33 +453,33 @@ namespace GolfHandicapApp
 
                 case 9:
                 case 10:
-                    return 3;
+                    return 2;
 
                 case 11:
                 case 12:
-                    return 4;
+                    return 3;
 
                 case 13:
                 case 14:
-                    return 5;
+                    return 3;
 
                 case 15:
                 case 16:
-                    return 6;
+                    return 4;
 
                 case 17:
-                    return 7;
+                    return 5;
 
                 case 18:
-                    return 8;
+                    return 6;
 
                 case 19:
-                    return 9;
+                    return 7;
 
                 default:
                     if (ScoreCount >= 20)
                     {
-                        return 10;
+                        return 8;
                     }
                     else
                     {
